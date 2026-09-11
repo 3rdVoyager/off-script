@@ -18,50 +18,122 @@
     <script src="/js/site/nav.js" defer></script>
   </head>
   <body>
-    <main>
-      <section class="page-hero">
-        <h1>From Reading to Remembering</h1>
-        <p>
-          OffScript! is a tool that helps you remember what you read, whether
-          you are an actor, a student, or just someone who just needs to recall
-          information effectively.
-        </p>
-        <a href="/app/index.html" class="button-primary">Get Started</a>
-        <p></p>
+    <main class="site-main">
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <p class="hero-eyebrow">For actors, students &amp; readers</p>
+          <h1 id="hero-heading">From Reading to <em>Remembering</em></h1>
+          <p class="hero-lead">
+            OffScript! turns your scripts and study material into active practice sessions
+            — so lines stick, scenes feel natural, and recall comes when you need it.
+          </p>
+          <div class="hero-actions">
+            <a href="/app/" class="button-primary">Get Started</a>
+            <a href="#how-it-works" class="button-ghost">See how it works</a>
+          </div>
+        </div>
       </section>
-      <section class="page-section">
-        <h2>Features</h2>
-        <ul>
-          <li>
-            <h3>Lorem ipsum dolor sit amet.</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
+
+      <section id="features" class="section features" aria-labelledby="features-heading">
+        <div class="section-inner">
+          <header class="section-header">
+            <p class="section-eyebrow">Features</p>
+            <h2 id="features-heading">Practice that actually sticks</h2>
+            <p class="section-lead">
+              Built for people who need to know their material cold — not just read it once.
             </p>
-          </li>
-          <li>
-            <h3>Lorem ipsum dolor sit amet.</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
-            </p>
-          </li>
-          <li>
-            <h3>Lorem ipsum dolor sit amet.</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
-            </p>
-          </li>
-        </ul>
+          </header>
+          <ul class="feature-grid">
+            <li class="feature-card">
+              <span class="material-icons feature-icon" aria-hidden="true">mic</span>
+              <h3>Line-by-line practice</h3>
+              <p>
+                Work through your script at your own pace. Hide lines, test yourself,
+                and build memory for every phrase.
+              </p>
+            </li>
+            <li class="feature-card">
+              <span class="material-icons feature-icon" aria-hidden="true">library_books</span>
+              <h3>Your scripts, organized</h3>
+              <p>
+                Keep multiple projects in one place. Switch between plays, auditions,
+                and study notes without losing your place.
+              </p>
+            </li>
+            <li class="feature-card">
+              <span class="material-icons feature-icon" aria-hidden="true">trending_up</span>
+              <h3>Track your progress</h3>
+              <p>
+                See which scenes you've mastered and which need another pass —
+                so rehearsal time goes where it counts.
+              </p>
+            </li>
+          </ul>
+        </div>
       </section>
-      <section class="page-section">
-        <h2>Get Started</h2>
-        <p>
-          A smarter way to practice, remember, and perform - for actors and
-          beyond.
-        </p>
-        <a href="/app/index.html" class="button-primary">Get Started</a>
+
+      <section id="how-it-works" class="section steps" aria-labelledby="steps-heading">
+        <div class="section-inner">
+          <header class="section-header">
+            <p class="section-eyebrow">How it works</p>
+            <h2 id="steps-heading">Three steps to off-book</h2>
+          </header>
+          <ol class="steps-list">
+            <li class="step-card">
+              <span class="step-number">1</span>
+              <div class="step-content">
+                <h3>Add your script</h3>
+                <p>Import or paste your material and organize it by scene or section.</p>
+              </div>
+            </li>
+            <li class="step-card">
+              <span class="step-number">2</span>
+              <div class="step-content">
+                <h3>Practice actively</h3>
+                <p>Run drills that force recall — not passive re-reading.</p>
+              </div>
+            </li>
+            <li class="step-card">
+              <span class="step-number">3</span>
+              <div class="step-content">
+                <h3>Perform with confidence</h3>
+                <p>Walk into the room knowing the words are inside you.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section audience" aria-labelledby="audience-heading">
+        <div class="section-inner audience-inner">
+          <header class="section-header">
+            <p class="section-eyebrow">Who it's for</p>
+            <h2 id="audience-heading">Made for anyone who performs from memory</h2>
+          </header>
+          <ul class="audience-grid">
+            <li class="audience-card">
+              <h3>Actors</h3>
+              <p>Auditions, rehearsals, and opening night — get off-book faster.</p>
+            </li>
+            <li class="audience-card">
+              <h3>Students</h3>
+              <p>Speeches, presentations, and exams that reward real recall.</p>
+            </li>
+            <li class="audience-card">
+              <h3>Readers</h3>
+              <p>Retain what you read so it stays with you long after you close the book.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="cta-banner" aria-labelledby="cta-heading">
+        <div class="cta-banner-inner">
+          <h2 id="cta-heading">Ready to go off script?</h2>
+          <p>Start practicing for free - no account required.</p>
+          <a href="/app/" class="button-primary">Get Started</a>
+        </div>
       </section>
     </main>
   </body>

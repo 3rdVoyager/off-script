@@ -1,5 +1,5 @@
 .button-primary, .button-secondary {
-    font-family: var(--font-family-body);
+    font-family: var(--body-font);
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
