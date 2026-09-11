@@ -1,0 +1,16 @@
+ :root {
+    --color-primary: #000;
+    --color-secondary: #fff;
+
+    --heading-font: 'Jakarta Sans', sans-serif;
+    --body-font: 'Inter', sans-serif;
+
+    --text-size-body-small: 12px;
+    --text-size-body: 16px;
+    --text-size-h1: 36px;
+    --text-size-h2: 24px;
+    --text-size-h3: 16px;
+
+    --text-color-primary: #000;
+    --text-color-secondary: #fff;
+ }
