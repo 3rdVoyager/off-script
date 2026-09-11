@@ -14,6 +14,7 @@ const sidebar = `
             <p class="sidebar-section-label">Current Script</p>
             <p class="sidebar-section-title">${loadedScript.title}</p>
             <ul>
+                <li><a href="/app/overview/index.html"><span class="material-icons" aria-hidden="true">book</span>Overview</a></li>
                 <li><a href="/app/practice/index.html"><span class="material-icons" aria-hidden="true">mic</span>Practice</a></li>
                 <li><a href="/app/progress/index.html"><span class="material-icons" aria-hidden="true">trending_up</span>Progress</a></li>
             </ul>
