@@ -2,4 +2,12 @@ body {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
+    background-color: var(--color-background);
+}
+
+.app-page {
+    flex: 1;
+    min-width: 0;
+    padding: 2rem;
+    overflow-y: auto;
 }

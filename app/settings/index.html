@@ -8,13 +8,31 @@
     <script src="/js/app/nav.js" defer></script>
   </head>
   <body>
-    <main>
-      <header>
+    <main class="app-page">
+      <header class="page-header">
         <h1>Settings</h1>
         <p>Account and app preferences.</p>
       </header>
-      <section>
-        <p>Settings options will go here.</p>
+
+      <section class="page-section">
+        <h2 class="page-section-title">Account</h2>
+        <article class="card stack">
+          <div class="list-row">
+            <span class="list-row-label">Email</span>
+            <span class="list-row-value">Not signed in</span>
+          </div>
+          <div class="list-row">
+            <span class="list-row-label">Sync</span>
+            <span class="list-row-value">Local only</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="page-section">
+        <h2 class="page-section-title">Preferences</h2>
+        <div class="empty-state">
+          <p>More settings options will go here.</p>
+        </div>
       </section>
     </main>
   </body>
