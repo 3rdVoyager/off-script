@@ -176,6 +176,16 @@ body.sidebar-collapsed .app-sidebar ul li a {
     color: var(--color-text);
 }
 
+.app-sidebar ul li a.is-active {
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.app-sidebar ul li a.is-active .material-icons {
+    color: var(--color-text);
+}
+
 .app-sidebar .nav-section--bottom {
     margin-top: auto;
     padding-top: 1rem;

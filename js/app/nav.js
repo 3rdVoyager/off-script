@@ -43,6 +43,39 @@ const sidebarMarkup = `
 
 document.body.insertAdjacentHTML("afterbegin", sidebarMarkup);
 
+function normalizePath(pathname) {
+    let path = pathname;
+
+    if (path.endsWith("/index.html")) {
+        path = path.slice(0, -"/index.html".length);
+    }
+
+    if (path.length > 1 && path.endsWith("/")) {
+        path = path.slice(0, -1);
+    }
+
+    return path || "/";
+}
+
+function setActiveNavLink() {
+    const currentPath = normalizePath(window.location.pathname);
+
+    document.querySelectorAll(".app-sidebar a[href]").forEach((link) => {
+        const linkPath = normalizePath(link.getAttribute("href"));
+        const isActive = currentPath === linkPath;
+
+        link.classList.toggle("is-active", isActive);
+
+        if (isActive) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
+    });
+}
+
+setActiveNavLink();
+
 const toggleButton = document.querySelector(".sidebar-toggle");
 const toggleIcon = toggleButton.querySelector(".material-icons");
 
