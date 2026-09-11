@@ -3,7 +3,7 @@ const header = `
     <header>
         <nav>
             <ul>
-                <li><a href="/app/index.html" class="button-primary">Get Started</a></li>
+                <li><a href="/app/" class="button-primary">Get Started</a></li>
             </ul>
         </nav>
     </header>
