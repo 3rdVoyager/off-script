@@ -8,6 +8,12 @@ body {
 .app-page {
     flex: 1;
     min-width: 0;
+    margin-left: var(--sidebar-width);
     padding: 2rem;
     overflow-y: auto;
+    transition: margin-left 0.2s ease-in-out;
+}
+
+body.sidebar-collapsed .app-page {
+    margin-left: var(--sidebar-width-collapsed);
 }

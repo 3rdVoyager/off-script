@@ -11,6 +11,9 @@
    --color-muted: #A9A8A4;
    --color-border: #2a3548;
 
+   --sidebar-width: 300px;
+   --sidebar-width-collapsed: 4rem;
+
 
    /* Forest Green */  
    /*
