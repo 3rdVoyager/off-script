@@ -8,12 +8,12 @@
 
 .button-primary {
     background-color: var(--color-primary);
-    color: var(--text-color-primary);
+    color: var(--color-text);
 }
 
 .button-secondary {
     background-color: var(--color-secondary);
-    color: var(--text-color-primary);
+    color: var(--color-text);
 }
 
 .button:hover {

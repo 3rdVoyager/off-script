@@ -1,16 +1,36 @@
  :root {
-    --color-primary: #000;
-    --color-secondary: #fff;
-
-    --heading-font: 'Jakarta Sans', sans-serif;
+    --heading-font: 'Cormorant Garamond', sans-serif;
     --body-font: 'Inter', sans-serif;
 
-    --text-size-body-small: 12px;
-    --text-size-body: 16px;
-    --text-size-h1: 36px;
-    --text-size-h2: 24px;
-    --text-size-h3: 16px;
+   --color-background: #101522;
+   --color-surface: #192131;
+   --color-surface-raised: #222C40;
+   --color-primary: #B83A4B;
+   --color-accent: #E4B85C;
+   --color-text: #F4EFE5;
+   --color-muted: #A9A8A4;
 
-    --text-color-primary: #000;
-    --text-color-secondary: #fff;
+
+   /* Forest Green */  
+   /*
+   --color-background: #F3F0E6;
+   --color-surface: #FCFBF5;
+   --color-primary: #21483E;
+   --color-primary-dark: #15332D;
+   --color-accent: #C39A52;
+   --color-text: #26312E;
+   --color-muted: #718078;
+   */
+
+   /* Purple */
+   /*
+   --color-background: #F6F1F5;
+   --color-surface: #FFFFFF;
+   --color-primary: #653B67;
+   --color-primary-dark: #432746;
+   --color-accent: #D5A85A;
+   --color-secondary: #A76C98;
+   --color-text: #29242B;
+   --color-muted: #776E78;
+   */
  }
