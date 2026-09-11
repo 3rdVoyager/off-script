@@ -31,3 +31,29 @@
     gap: 0.75rem;
     margin-top: 1rem;
 }
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1rem;
+}
+
+.tool-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.tool-card:hover {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.tool-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
