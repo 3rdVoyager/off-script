@@ -40,10 +40,6 @@ function validateScript(script) {
         return 'Only scripts with type "play" are supported right now.';
     }
 
-    if (script.id === undefined || script.id === null || script.id === "") {
-        return "Script must have an id.";
-    }
-
     if (typeof script.title !== "string" || script.title.trim() === "") {
         return "Script must have a title.";
     }
@@ -91,10 +87,20 @@ function validateScript(script) {
     return null;
 }
 
+function createScriptId() {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return crypto.randomUUID();
+    }
+
+    return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
+
 function normalizeScript(script) {
+    const { id: _uploadedId, ...scriptWithoutId } = script;
+
     return {
-        ...script,
-        id: String(script.id),
+        ...scriptWithoutId,
+        id: createScriptId(),
         title: script.title.trim(),
     };
 }
@@ -108,16 +114,8 @@ function saveScript(script) {
 
     const normalizedScript = normalizeScript(script);
     const data = getScriptsData();
-    const existingIndex = data.scripts.findIndex(
-        (item) => String(item.id) === normalizedScript.id
-    );
 
-    if (existingIndex >= 0) {
-        data.scripts[existingIndex] = normalizedScript;
-    } else {
-        data.scripts.push(normalizedScript);
-    }
-
+    data.scripts.push(normalizedScript);
     data.activeScriptId = normalizedScript.id;
     saveScriptsData(data);
 
