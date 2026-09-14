@@ -16,6 +16,8 @@
     <link rel="manifest" href="/assets/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/css/app/main.css" />
     <script src="/js/app/nav.js" defer></script>
+    <script src="/js/app/storage.js" defer></script>
+    <script src="/js/app/uploads.js" defer></script>
   </head>
   <body>
     <main class="app-page">
@@ -25,9 +27,30 @@
       </header>
 
       <section class="page-section">
-        <div class="empty-state">
-          <p>Script management will go here.</p>
-        </div>
+        <h2 class="page-section-title">Add script</h2>
+        <p
+          class="upload-feedback"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></p>
+        <form class="add-script-form stack">
+          <label for="script-file">Upload JSON file</label>
+          <input
+            type="file"
+            id="script-file"
+            name="script-file"
+            accept=".json,application/json"
+          />
+          <label for="script-json">Or paste JSON</label>
+          <textarea
+            id="script-json"
+            name="script-json"
+            rows="10"
+            placeholder="Paste a play.json object here"
+          ></textarea>
+          <button type="submit" class="button-primary">Add Script</button>
+        </form>
       </section>
     </main>
   </body>

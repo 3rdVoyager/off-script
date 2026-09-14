@@ -57,3 +57,45 @@
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
+
+.add-script-form label {
+    font-weight: 600;
+}
+
+.add-script-form input[type="file"],
+.add-script-form textarea {
+    width: 100%;
+    max-width: 40rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+}
+
+.add-script-form textarea {
+    resize: vertical;
+    min-height: 10rem;
+}
+
+.upload-feedback {
+    max-width: 40rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+}
+
+.upload-feedback--success {
+    background-color: var(--color-surface);
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.upload-feedback--error {
+    background-color: var(--color-surface);
+    border-color: var(--color-primary);
+    color: var(--color-text);
+}
