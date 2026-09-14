@@ -103,8 +103,7 @@
 }
 
 .add-script-form-dropzone:hover,
-.add-script-form-dropzone:focus-within,
-.add-script-form-dropzone.is-dragover {
+.add-script-form-dropzone:focus-within {
     border-color: var(--color-accent);
     background-color: var(--color-surface-raised);
     color: var(--color-text);

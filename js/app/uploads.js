@@ -2,7 +2,6 @@ const addScriptForm = document.querySelector(".add-script-form");
 const uploadFeedback = document.querySelector(".upload-feedback");
 const fileInput = document.querySelector("#script-file");
 const fileNameDisplay = document.querySelector("[data-file-name]");
-const dropzone = document.querySelector(".add-script-form-dropzone");
 
 if (!addScriptForm) {
     throw new Error("Add script form not found.");
@@ -12,31 +11,6 @@ if (fileInput && fileNameDisplay) {
     fileInput.addEventListener("change", () => {
         const file = fileInput.files?.[0];
         fileNameDisplay.textContent = file ? file.name : "";
-    });
-}
-
-if (dropzone && fileInput) {
-    dropzone.addEventListener("dragover", (event) => {
-        event.preventDefault();
-        dropzone.classList.add("is-dragover");
-    });
-
-    dropzone.addEventListener("dragleave", () => {
-        dropzone.classList.remove("is-dragover");
-    });
-
-    dropzone.addEventListener("drop", (event) => {
-        event.preventDefault();
-        dropzone.classList.remove("is-dragover");
-
-        const file = event.dataTransfer?.files?.[0];
-
-        if (!file) {
-            return;
-        }
-
-        fileInput.files = event.dataTransfer.files;
-        fileNameDisplay.textContent = file.name;
     });
 }
 
