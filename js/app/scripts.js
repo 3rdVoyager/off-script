@@ -2,6 +2,38 @@ const scriptList = document.querySelector("[data-script-list]");
 
 if (scriptList) {
     renderScriptList();
+
+    scriptList.addEventListener("click", (event) => {
+        const deleteButton = event.target.closest("[data-delete-script]");
+
+        if (!deleteButton) {
+            return;
+        }
+
+        const scriptId = deleteButton.dataset.deleteScript;
+        const data = getScriptsData();
+        const script = data.scripts.find(
+            (item) => String(item.id) === String(scriptId)
+        );
+
+        if (!script) {
+            return;
+        }
+
+        const confirmed = confirm(`Delete "${script.title}"? This cannot be undone.`);
+
+        if (!confirmed) {
+            return;
+        }
+
+        const result = deleteScript(scriptId);
+
+        if (!result.ok) {
+            return;
+        }
+
+        renderScriptList();
+    });
 }
 
 function renderScriptList() {
@@ -46,12 +78,30 @@ function createScriptCard(script, activeScriptId) {
 
     header.appendChild(title);
 
+    const actions = document.createElement("div");
+    actions.className = "script-card-actions";
+
     if (isActive) {
         const badge = document.createElement("span");
         badge.className = "script-card-badge";
         badge.textContent = "Active";
-        header.appendChild(badge);
+        actions.appendChild(badge);
     }
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "script-card-delete";
+    deleteButton.dataset.deleteScript = script.id;
+    deleteButton.setAttribute("aria-label", `Delete ${script.title}`);
+
+    const deleteIcon = document.createElement("span");
+    deleteIcon.className = "material-icons";
+    deleteIcon.setAttribute("aria-hidden", "true");
+    deleteIcon.textContent = "delete";
+    deleteButton.appendChild(deleteIcon);
+
+    actions.appendChild(deleteButton);
+    header.appendChild(actions);
 
     item.appendChild(header);
 
