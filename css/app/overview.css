@@ -1,0 +1,115 @@
+.overview-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.overview-hero {
+    margin-bottom: 0;
+}
+
+.overview-title {
+    font-family: var(--heading-font);
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.overview-notes {
+    color: var(--color-muted);
+    max-width: 40rem;
+    margin-bottom: 0;
+}
+
+.overview-muted {
+    color: var(--color-muted);
+    margin: 0;
+}
+
+.overview-character-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.overview-character-chip {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.overview-acts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.overview-act {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+}
+
+.overview-act-title {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.overview-scene-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.overview-scene {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+}
+
+.overview-scene-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.overview-scene-title {
+    font-family: var(--body-font);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.overview-scene-meta {
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin: 0;
+}
+
+.overview-scene-characters {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin: 0;
+}
+
+@media (max-width: 40rem) {
+    .overview-scene-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}

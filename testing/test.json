@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "type": "play",
   "title": "Test Script",
-  "notes": "Test script — one act, one scene, a few lines.",
+  "notes": "Test script — a simple multi-act play, with short scenes and lines.",
   "acts": [
     {
       "title": "Act I",
@@ -23,6 +23,92 @@
               "type": "line",
               "character": "Bob",
               "text": "Hello Joe."
+            }
+          ]
+        },
+        {
+          "title": "Scene 2",
+          "lines": [
+            {
+              "type": "direction",
+              "text": "Bob sits on a chair."
+            },
+            {
+              "type": "line",
+              "character": "Bob",
+              "text": "It's quiet here."
+            },
+            {
+              "type": "line",
+              "character": "Joe",
+              "text": "Maybe too quiet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Act II",
+      "scenes": [
+        {
+          "title": "Scene 1",
+          "lines": [
+            {
+              "type": "direction",
+              "text": "A table is placed center stage."
+            },
+            {
+              "type": "line",
+              "character": "Joe",
+              "text": "Did you bring the papers?"
+            },
+            {
+              "type": "line",
+              "character": "Bob",
+              "text": "Of course. Here they are."
+            }
+          ]
+        },
+        {
+          "title": "Scene 2",
+          "lines": [
+            {
+              "type": "direction",
+              "text": "Bob stands and looks out."
+            },
+            {
+              "type": "line",
+              "character": "Bob",
+              "text": "Will anyone else come?"
+            },
+            {
+              "type": "line",
+              "character": "Joe",
+              "text": "I don't think so. It's just us."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Act III",
+      "scenes": [
+        {
+          "title": "Scene 1",
+          "lines": [
+            {
+              "type": "direction",
+              "text": "A light dims slowly."
+            },
+            {
+              "type": "line",
+              "character": "Joe",
+              "text": "It's almost time to leave."
+            },
+            {
+              "type": "line",
+              "character": "Bob",
+              "text": "Yes, let's go."
             }
           ]
         }
