@@ -47,7 +47,7 @@ body.sidebar-collapsed .app-sidebar {
 }
 
 .app-sidebar ul,
-.app-sidebar > div {
+.app-sidebar > div:not(.sidebar-footer) {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -126,11 +126,11 @@ body.sidebar-collapsed .nav-link-label {
     white-space: nowrap;
 }
 
-.sidebar-footer {
+.app-sidebar > .sidebar-footer {
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 1rem;
 }
 
 .sidebar-active-script {
