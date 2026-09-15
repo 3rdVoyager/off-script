@@ -6,14 +6,43 @@ function getSidebarScriptTitle() {
     return activeScript ? activeScript.title : "No script loaded";
 }
 
+function getSidebarMasteryDisplay() {
+    // Placeholder until progress scoring is wired up.
+    const activeScript = getActiveScript();
+
+    if (!activeScript) {
+        return { percent: 0, label: "—" };
+    }
+
+    return { percent: 0, label: "0%" };
+}
+
 function updateSidebarScriptTitle() {
     const titleElement = document.querySelector(".sidebar-active-script-title");
 
-    if (!titleElement) {
+    if (titleElement) {
+        titleElement.textContent = getSidebarScriptTitle();
+    }
+
+    updateSidebarMasteryDial();
+}
+
+function updateSidebarMasteryDial() {
+    const dial = document.querySelector("[data-mastery-dial]");
+
+    if (!dial) {
         return;
     }
 
-    titleElement.textContent = getSidebarScriptTitle();
+    const valueElement = dial.querySelector(".sidebar-mastery-dial-value");
+    const { percent, label } = getSidebarMasteryDisplay();
+
+    dial.style.setProperty("--mastery-percent", String(percent));
+    dial.setAttribute("aria-label", `Mastery ${label}`);
+
+    if (valueElement) {
+        valueElement.textContent = label;
+    }
 }
 
 const savedCollapsed = localStorage.getItem(SIDEBAR_STORAGE_KEY) === "true";
@@ -35,13 +64,6 @@ const sidebarMarkup = `
             <li><a href="/app/" title="Dashboard"><span class="material-icons" aria-hidden="true">dashboard</span><span class="nav-link-label">Dashboard</span></a></li>
         </ul>
         <div>
-            <p class="sidebar-section-label">Script</p>
-            <ul>
-                <li><a href="/app/overview/" title="Overview"><span class="material-icons" aria-hidden="true">book</span><span class="nav-link-label">Overview</span></a></li>
-                <li><a href="/app/progress/" title="Progress"><span class="material-icons" aria-hidden="true">trending_up</span><span class="nav-link-label">Progress</span></a></li>
-            </ul>
-        </div>
-        <div>
             <p class="sidebar-section-label">Practice</p>
             <ul>
                 <li><a href="/app/practice/read/" title="Read"><span class="material-icons" aria-hidden="true">menu_book</span><span class="nav-link-label">Read</span></a></li>
@@ -50,17 +72,25 @@ const sidebarMarkup = `
             </ul>
         </div>
         <div class="sidebar-footer">
-            <div class="sidebar-active-script">
-                <p class="sidebar-section-label">Active Script</p>
-                <p class="sidebar-active-script-title">${getSidebarScriptTitle()}</p>
+            <p class="sidebar-active-script-title">${getSidebarScriptTitle()}</p>
+            <div class="sidebar-mastery-dial" data-mastery-dial role="img" aria-label="Mastery —" style="--mastery-percent: 0">
+                <div class="sidebar-mastery-dial-ring" aria-hidden="true"></div>
+                <span class="sidebar-mastery-dial-value">—</span>
             </div>
-            <div class="nav-section--bottom">
-                <p class="sidebar-section-label">Settings</p>
-                <ul>
-                    <li><a href="/app/scripts/" title="Manage Scripts"><span class="material-icons" aria-hidden="true">library_books</span><span class="nav-link-label">Manage Scripts</span></a></li>
-                    <li><a href="/app/settings/" title="Settings"><span class="material-icons" aria-hidden="true">settings</span><span class="nav-link-label">Settings</span></a></li>
-                </ul>
-            </div>
+            <nav class="sidebar-footer-actions" aria-label="Quick links">
+                <a href="/app/overview/" class="sidebar-footer-action" title="Overview">
+                    <span class="material-icons" aria-hidden="true">book</span>
+                </a>
+                <a href="/app/progress/" class="sidebar-footer-action" title="Progress">
+                    <span class="material-icons" aria-hidden="true">trending_up</span>
+                </a>
+                <a href="/app/scripts/" class="sidebar-footer-action" title="Manage Scripts">
+                    <span class="material-icons" aria-hidden="true">library_books</span>
+                </a>
+                <a href="/app/settings/" class="sidebar-footer-action" title="Settings">
+                    <span class="material-icons" aria-hidden="true">settings</span>
+                </a>
+            </nav>
         </div>
     </nav>
 `;
@@ -84,7 +114,7 @@ function normalizePath(pathname) {
 function setActiveNavLink() {
     const currentPath = normalizePath(window.location.pathname);
 
-    document.querySelectorAll(".app-sidebar a[href]").forEach((link) => {
+    document.querySelectorAll(".app-sidebar a[href], .sidebar-footer-action[href]").forEach((link) => {
         const linkPath = normalizePath(link.getAttribute("href"));
         const isActive = currentPath === linkPath;
 
@@ -99,6 +129,7 @@ function setActiveNavLink() {
 }
 
 setActiveNavLink();
+updateSidebarScriptTitle();
 
 const toggleButton = document.querySelector(".sidebar-toggle");
 const toggleIcon = toggleButton.querySelector(".material-icons");
