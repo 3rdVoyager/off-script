@@ -176,10 +176,22 @@
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
     padding: 1.25rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.script-card:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
 }
 
 .script-card--active {
     border-color: var(--color-accent);
+    cursor: default;
+}
+
+.script-card--active:hover {
+    background-color: var(--color-surface);
 }
 
 .script-card-header {

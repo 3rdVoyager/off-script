@@ -134,6 +134,22 @@ function getActiveScript() {
     ) ?? null;
 }
 
+function setActiveScript(scriptId) {
+    const data = getScriptsData();
+    const script = data.scripts.find(
+        (item) => String(item.id) === String(scriptId)
+    );
+
+    if (!script) {
+        return { ok: false, error: "Script not found." };
+    }
+
+    data.activeScriptId = script.id;
+    saveScriptsData(data);
+
+    return { ok: true, script };
+}
+
 function deleteScript(scriptId) {
     const data = getScriptsData();
     const index = data.scripts.findIndex(

@@ -52,4 +52,5 @@ addScriptForm.addEventListener("submit", async (event) => {
     }
 
     renderScriptList();
+    updateSidebarScriptTitle();
 });

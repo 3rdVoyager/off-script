@@ -6,33 +6,56 @@ if (scriptList) {
     scriptList.addEventListener("click", (event) => {
         const deleteButton = event.target.closest("[data-delete-script]");
 
-        if (!deleteButton) {
+        if (deleteButton) {
+            const scriptId = deleteButton.dataset.deleteScript;
+            const data = getScriptsData();
+            const script = data.scripts.find(
+                (item) => String(item.id) === String(scriptId)
+            );
+
+            if (!script) {
+                return;
+            }
+
+            const confirmed = confirm(`Delete "${script.title}"? This cannot be undone.`);
+
+            if (!confirmed) {
+                return;
+            }
+
+            const result = deleteScript(scriptId);
+
+            if (!result.ok) {
+                return;
+            }
+
+            renderScriptList();
+            updateSidebarScriptTitle();
             return;
         }
 
-        const scriptId = deleteButton.dataset.deleteScript;
+        const card = event.target.closest("[data-script-id]");
+
+        if (!card) {
+            return;
+        }
+
+        const scriptId = card.dataset.scriptId;
         const data = getScriptsData();
-        const script = data.scripts.find(
-            (item) => String(item.id) === String(scriptId)
-        );
 
-        if (!script) {
+        if (String(data.activeScriptId) === String(scriptId)) {
             return;
         }
 
-        const confirmed = confirm(`Delete "${script.title}"? This cannot be undone.`);
-
-        if (!confirmed) {
-            return;
-        }
-
-        const result = deleteScript(scriptId);
+        const result = setActiveScript(scriptId);
 
         if (!result.ok) {
             return;
         }
 
         renderScriptList();
+        updateSidebarScriptTitle();
+        showFeedback(`"${result.script.title}" is now active.`, "success");
     });
 }
 
@@ -68,6 +91,7 @@ function createScriptCard(script, activeScriptId) {
     const isActive = String(script.id) === String(activeScriptId);
 
     item.className = isActive ? "script-card script-card--active" : "script-card";
+    item.dataset.scriptId = script.id;
 
     const header = document.createElement("div");
     header.className = "script-card-header";

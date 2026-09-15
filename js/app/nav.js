@@ -1,8 +1,20 @@
 const SIDEBAR_STORAGE_KEY = "offscript-sidebar-collapsed";
 
-const loadedScript = {
-    title: "The Two Noble Kinsmen"
-};
+function getSidebarScriptTitle() {
+    const activeScript = getActiveScript();
+
+    return activeScript ? activeScript.title : "No script loaded";
+}
+
+function updateSidebarScriptTitle() {
+    const titleElement = document.querySelector(".sidebar-section-title");
+
+    if (!titleElement) {
+        return;
+    }
+
+    titleElement.textContent = getSidebarScriptTitle();
+}
 
 const savedCollapsed = localStorage.getItem(SIDEBAR_STORAGE_KEY) === "true";
 if (savedCollapsed) {
@@ -24,7 +36,7 @@ const sidebarMarkup = `
         </ul>
         <div>
             <p class="sidebar-section-label">Current Script</p>
-            <p class="sidebar-section-title">${loadedScript.title}</p>
+            <p class="sidebar-section-title">${getSidebarScriptTitle()}</p>
             <ul>
                 <li><a href="/app/overview/" title="Overview"><span class="material-icons" aria-hidden="true">book</span><span class="nav-link-label">Overview</span></a></li>
                 <li><a href="/app/practice/" title="Practice"><span class="material-icons" aria-hidden="true">mic</span><span class="nav-link-label">Practice</span></a></li>
