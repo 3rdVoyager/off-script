@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "type": "play",
+  "title": "Test Script",
+  "notes": "Test script — one act, one scene, a few lines.",
+  "acts": [
+    {
+      "title": "Act I",
+      "scenes": [
+        {
+          "title": "Scene 1",
+          "lines": [
+            {
+              "type": "direction",
+              "text": "A bare stage."
+            },
+            {
+              "type": "line",
+              "character": "Joe",
+              "text": "Hello Bob."
+            },
+            {
+              "type": "line",
+              "character": "Bob",
+              "text": "Hello Joe."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
