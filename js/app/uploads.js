@@ -1,5 +1,4 @@
 const addScriptForm = document.querySelector(".add-script-form");
-const uploadFeedback = document.querySelector(".upload-feedback");
 const fileInput = document.querySelector("#script-file");
 const fileNameDisplay = document.querySelector("[data-file-name]");
 
@@ -16,7 +15,6 @@ if (fileInput && fileNameDisplay) {
 
 addScriptForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    clearFeedback();
 
     const formData = new FormData(addScriptForm);
     const file = formData.get("script-file");
@@ -55,23 +53,3 @@ addScriptForm.addEventListener("submit", async (event) => {
 
     renderScriptList();
 });
-
-function showFeedback(message, type) {
-    if (!uploadFeedback) {
-        return;
-    }
-
-    uploadFeedback.textContent = message;
-    uploadFeedback.className = `upload-feedback upload-feedback--${type}`;
-    uploadFeedback.hidden = false;
-}
-
-function clearFeedback() {
-    if (!uploadFeedback) {
-        return;
-    }
-
-    uploadFeedback.textContent = "";
-    uploadFeedback.hidden = true;
-    uploadFeedback.className = "upload-feedback";
-}
