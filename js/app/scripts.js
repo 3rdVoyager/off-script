@@ -29,6 +29,7 @@ if (scriptList) {
                 return;
             }
 
+            deleteScriptSettings(scriptId);
             renderScriptList();
             updateSidebarScriptTitle();
             return;

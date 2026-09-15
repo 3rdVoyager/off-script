@@ -1,0 +1,94 @@
+.settings-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.settings-row:last-child {
+    border-bottom: none;
+}
+
+.settings-row-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-row-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+}
+
+.settings-row-hint {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin: 0;
+    max-width: 32rem;
+}
+
+.settings-row-control {
+    flex-shrink: 0;
+}
+
+.settings-control {
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    color: var(--color-text);
+}
+
+select.settings-control--select {
+    min-width: 12rem;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+select.settings-control--select:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+select.settings-control--select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+input.settings-control--toggle {
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.settings-empty-message {
+    color: var(--color-muted);
+    margin: 0;
+    padding: 1.25rem;
+}
+
+@media (max-width: 40rem) {
+    .settings-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .settings-row-control {
+        width: 100%;
+    }
+
+    select.settings-control--select {
+        width: 100%;
+    }
+}

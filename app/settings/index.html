@@ -15,36 +15,29 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="/assets/favicon/site.webmanifest" />
     <link rel="stylesheet" href="/css/app/main.css" />
+    <link rel="stylesheet" href="/css/app/settings.css" />
     <script src="/js/app/storage.js" defer></script>
+    <script src="/js/app/scripts-storage.js" defer></script>
+    <script src="/js/app/settings-storage.js" defer></script>
     <script src="/js/app/feedback.js" defer></script>
     <script src="/js/app/nav.js" defer></script>
+    <script src="/js/app/settings.js" defer></script>
   </head>
   <body>
     <main class="app-page">
       <header class="page-header">
         <h1>Settings</h1>
-        <p>Account and app preferences.</p>
+        <p>Practice options for your active script and app-wide preferences.</p>
       </header>
 
       <section class="page-section">
-        <h2 class="page-section-title">Account</h2>
-        <article class="card stack">
-          <div class="list-row">
-            <span class="list-row-label">Email</span>
-            <span class="list-row-value">Not signed in</span>
-          </div>
-          <div class="list-row">
-            <span class="list-row-label">Sync</span>
-            <span class="list-row-value">Local only</span>
-          </div>
-        </article>
+        <h2 class="page-section-title">Practice settings</h2>
+        <article class="card settings-card" data-practice-settings-root></article>
       </section>
 
       <section class="page-section">
-        <h2 class="page-section-title">Preferences</h2>
-        <div class="empty-state">
-          <p>More settings options will go here.</p>
-        </div>
+        <h2 class="page-section-title">App settings</h2>
+        <article class="card settings-card" data-app-settings-root></article>
       </section>
     </main>
   </body>
