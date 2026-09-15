@@ -20,21 +20,56 @@
     margin: 0;
 }
 
-.overview-character-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+.overview-character-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface);
 }
 
-.overview-character-chip {
-    padding: 0.35rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background-color: var(--color-surface);
-    color: var(--color-text);
-    font-size: 0.875rem;
+.overview-character-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.overview-character-table th,
+.overview-character-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.overview-character-table thead th {
+    font-size: 0.75rem;
     font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background-color: var(--color-background);
+}
+
+.overview-character-table tbody tr:last-child th,
+.overview-character-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.overview-character-table tbody th {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.overview-character-table tbody td {
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.overview-character-row--practice th {
+    color: var(--color-accent);
+}
+
+.overview-character-row--practice {
+    background-color: var(--color-surface-raised);
 }
 
 .overview-acts {

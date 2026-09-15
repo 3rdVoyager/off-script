@@ -90,7 +90,7 @@ function createStatCard(value, label) {
 }
 
 function createCharactersSection(script) {
-    const characters = getScriptCharacters(script);
+    const characterStats = getCharacterStatsList(script);
     const section = document.createElement("section");
     section.className = "page-section";
 
@@ -99,7 +99,7 @@ function createCharactersSection(script) {
     heading.textContent = "Characters";
     section.appendChild(heading);
 
-    if (characters.length === 0) {
+    if (characterStats.length === 0) {
         const empty = document.createElement("p");
         empty.className = "overview-muted";
         empty.textContent = "No spoken lines yet.";
@@ -107,17 +107,61 @@ function createCharactersSection(script) {
         return section;
     }
 
-    const list = document.createElement("ul");
-    list.className = "overview-character-list";
+    const practiceCharacter = typeof getScriptSettings === "function"
+        ? getScriptSettings(script.id).practiceCharacter
+        : "";
 
-    for (const character of characters) {
-        const item = document.createElement("li");
-        item.className = "overview-character-chip";
-        item.textContent = character;
-        list.appendChild(item);
+    const tableWrap = document.createElement("div");
+    tableWrap.className = "overview-character-table-wrap";
+
+    const table = document.createElement("table");
+    table.className = "overview-character-table";
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    for (const label of ["Character", "Lines", "Scenes", "Acts"]) {
+        const th = document.createElement("th");
+        th.scope = "col";
+        th.textContent = label;
+        headerRow.appendChild(th);
     }
 
-    section.appendChild(list);
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    for (const character of characterStats) {
+        const row = document.createElement("tr");
+
+        if (practiceCharacter && character.name === practiceCharacter) {
+            row.classList.add("overview-character-row--practice");
+        }
+
+        const nameCell = document.createElement("th");
+        nameCell.scope = "row";
+        nameCell.textContent = character.name;
+        row.appendChild(nameCell);
+
+        const linesCell = document.createElement("td");
+        linesCell.textContent = String(character.lineCount);
+        row.appendChild(linesCell);
+
+        const scenesCell = document.createElement("td");
+        scenesCell.textContent = String(character.sceneCount);
+        row.appendChild(scenesCell);
+
+        const actsCell = document.createElement("td");
+        actsCell.textContent = String(character.actCount);
+        row.appendChild(actsCell);
+
+        tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+    tableWrap.appendChild(table);
+    section.appendChild(tableWrap);
     return section;
 }
 
@@ -222,17 +266,66 @@ function getScriptStats(script) {
 }
 
 function getScriptCharacters(script) {
-    const characters = new Set();
+    return getCharacterStatsList(script).map((character) => character.name);
+}
 
-    for (const act of script.acts) {
-        for (const scene of act.scenes) {
-            for (const character of getSceneCharacters(scene)) {
-                characters.add(character);
+function getCharacterStatsList(script) {
+    const statsByCharacter = new Map();
+
+    for (let actIndex = 0; actIndex < script.acts.length; actIndex++) {
+        const act = script.acts[actIndex];
+
+        for (let sceneIndex = 0; sceneIndex < act.scenes.length; sceneIndex++) {
+            const scene = act.scenes[sceneIndex];
+            const charactersInScene = new Set();
+
+            for (const line of scene.lines) {
+                if (line.type !== "line" || !line.character.trim()) {
+                    continue;
+                }
+
+                const name = line.character.trim();
+                charactersInScene.add(name);
+
+                if (!statsByCharacter.has(name)) {
+                    statsByCharacter.set(name, {
+                        name,
+                        lineCount: 0,
+                        sceneCount: 0,
+                        actCount: 0,
+                        sceneKeys: new Set(),
+                        actKeys: new Set(),
+                    });
+                }
+
+                statsByCharacter.get(name).lineCount += 1;
+            }
+
+            for (const name of charactersInScene) {
+                const stats = statsByCharacter.get(name);
+                const sceneKey = `${actIndex}-${sceneIndex}`;
+
+                if (!stats.sceneKeys.has(sceneKey)) {
+                    stats.sceneKeys.add(sceneKey);
+                    stats.sceneCount += 1;
+                }
+
+                if (!stats.actKeys.has(actIndex)) {
+                    stats.actKeys.add(actIndex);
+                    stats.actCount += 1;
+                }
             }
         }
     }
 
-    return Array.from(characters).sort((a, b) => a.localeCompare(b));
+    return Array.from(statsByCharacter.values())
+        .map(({ name, lineCount, sceneCount, actCount }) => ({
+            name,
+            lineCount,
+            sceneCount,
+            actCount,
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function getSceneCharacters(scene) {
