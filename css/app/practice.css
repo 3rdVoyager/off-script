@@ -1,16 +1,16 @@
-.read-tool {
+.practice-tool {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
 }
 
-.read-meta {
+.practice-meta {
     color: var(--color-muted);
     font-size: 0.875rem;
     margin: 0;
 }
 
-.read-card {
+.practice-card {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -18,17 +18,17 @@
     overflow: hidden;
 }
 
-.read-cue,
-.read-line {
+.practice-cue,
+.practice-content {
     padding: 1.5rem;
 }
 
-.read-cue {
+.practice-cue {
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-background);
 }
 
-.read-section-label {
+.practice-section-label {
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -37,21 +37,21 @@
     margin: 0 0 0.75rem;
 }
 
-.read-cue-empty {
+.practice-cue-empty {
     color: var(--color-muted);
     font-style: italic;
     margin: 0;
 }
 
-.read-cue-direction {
+.practice-cue-direction {
     color: var(--color-muted);
     font-style: italic;
     margin: 0;
     line-height: 1.6;
 }
 
-.read-cue-character,
-.read-line-character {
+.practice-cue-character,
+.practice-line-character {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -59,22 +59,23 @@
     color: var(--color-accent);
 }
 
-.read-cue-text,
-.read-line-text {
+.practice-cue-text,
+.practice-line-text {
     font-family: var(--heading-font);
     font-size: 1.5rem;
     line-height: 1.5;
     margin: 0;
 }
 
-.read-line {
+.practice-content {
     min-height: 10rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 0.75rem;
 }
 
-.read-reveal-button {
+.practice-reveal-button {
     align-self: flex-start;
     font-family: var(--body-font);
     font-size: 0.95rem;
@@ -88,18 +89,63 @@
     transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.read-reveal-button:hover {
+.practice-reveal-button:hover {
     border-color: var(--color-accent);
     color: var(--color-accent);
 }
 
-.read-nav {
+.practice-line-input-wrap {
+    width: 100%;
+}
+
+.practice-line-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--heading-font);
+    font-size: 1.25rem;
+    line-height: 1.5;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.practice-line-input:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+.practice-line-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+.practice-line-input.practice-line-input--error,
+.practice-line-input.practice-line-input--error:hover:not(:disabled),
+.practice-line-input.practice-line-input--error:focus {
+    border-color: var(--color-primary);
+    background-color: var(--color-background);
+}
+
+.practice-line-input.practice-line-input--complete,
+.practice-line-input.practice-line-input--complete:focus {
+    border-color: var(--color-accent);
+}
+
+.practice-line-input:disabled {
+    opacity: 0.85;
+    cursor: default;
+}
+
+.practice-nav {
     display: flex;
     justify-content: center;
     gap: 1rem;
 }
 
-.read-nav-button {
+.practice-nav-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -113,17 +159,17 @@
     transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.read-nav-button:hover:not(:disabled) {
+.practice-nav-button:hover:not(:disabled) {
     border-color: var(--color-accent);
     background-color: var(--color-surface-raised);
     color: var(--color-accent);
 }
 
-.read-nav-button:disabled {
+.practice-nav-button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-.read-nav-button .material-icons {
+.practice-nav-button .material-icons {
     font-size: 1.5rem;
 }

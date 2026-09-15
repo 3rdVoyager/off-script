@@ -82,7 +82,7 @@ const sidebarMarkup = `
             <p class="sidebar-section-label">Practice</p>
             <ul>
                 <li><a href="/app/practice/read/" title="Read"><span class="material-icons" aria-hidden="true">menu_book</span><span class="nav-link-label">Read</span></a></li>
-                <li><a href="/app/practice/recite/" title="Recite"><span class="material-icons" aria-hidden="true">mic</span><span class="nav-link-label">Recite</span></a></li>
+                <li><a href="/app/practice/recite/" title="Recite"><span class="material-icons" aria-hidden="true">keyboard</span><span class="nav-link-label">Recite</span></a></li>
                 <li><a href="/app/practice/recall/" title="Recall"><span class="material-icons" aria-hidden="true">psychology</span><span class="nav-link-label">Recall</span></a></li>
             </ul>
         </div>
