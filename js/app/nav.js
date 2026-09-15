@@ -7,14 +7,29 @@ function getSidebarScriptTitle() {
 }
 
 function getSidebarMasteryDisplay() {
-    // Placeholder until progress scoring is wired up.
     const activeScript = getActiveScript();
 
     if (!activeScript) {
         return { percent: 0, label: "—" };
     }
 
-    return { percent: 0, label: "0%" };
+    if (typeof getScriptSettings !== "function" || typeof getScriptMasteryPercent !== "function") {
+        return { percent: 0, label: "0%" };
+    }
+
+    const settings = getScriptSettings(activeScript.id);
+
+    if (!settings.practiceCharacter) {
+        return { percent: 0, label: "—" };
+    }
+
+    const percent = getScriptMasteryPercent(
+        activeScript,
+        settings.practiceCharacter,
+        settings.showStageDirections
+    );
+
+    return { percent, label: `${percent}%` };
 }
 
 function updateSidebarScriptTitle() {

@@ -20,10 +20,10 @@ function renderPracticeSettings() {
     const script = getActiveScript();
 
     if (!script) {
-        const empty = document.createElement("p");
-        empty.className = "settings-empty-message";
-        empty.textContent = "No active script. Load one on Manage Scripts to edit practice settings.";
-        practiceSettingsRoot.appendChild(empty);
+        practiceSettingsRoot.appendChild(createEmptyState(
+            "No active script. Load one on Manage Scripts to edit practice settings.",
+            { variant: "minimal" }
+        ));
         return;
     }
 
@@ -82,10 +82,7 @@ function renderAppSettings() {
 
     appSettingsRoot.replaceChildren();
 
-    const empty = document.createElement("p");
-    empty.className = "settings-empty-message";
-    empty.textContent = "No app settings yet.";
-    appSettingsRoot.appendChild(empty);
+    appSettingsRoot.appendChild(createEmptyState("No app settings yet.", { variant: "minimal" }));
 }
 
 function createSettingsRow({ id, label, hint, control }) {

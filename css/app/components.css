@@ -54,6 +54,19 @@
     color: var(--color-muted);
 }
 
+.empty-state--centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-state-minimal {
+    color: var(--color-muted);
+    margin: 0;
+    padding: 1.25rem;
+}
+
 .stack {
     display: flex;
     flex-direction: column;

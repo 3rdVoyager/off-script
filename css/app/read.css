@@ -1,0 +1,129 @@
+.read-tool {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.read-meta {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.read-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.read-cue,
+.read-line {
+    padding: 1.5rem;
+}
+
+.read-cue {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-background);
+}
+
+.read-section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin: 0 0 0.75rem;
+}
+
+.read-cue-empty {
+    color: var(--color-muted);
+    font-style: italic;
+    margin: 0;
+}
+
+.read-cue-direction {
+    color: var(--color-muted);
+    font-style: italic;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.read-cue-character,
+.read-line-character {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 0.5rem;
+    color: var(--color-accent);
+}
+
+.read-cue-text,
+.read-line-text {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.read-line {
+    min-height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.read-reveal-button {
+    align-self: flex-start;
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.read-reveal-button:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.read-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.read-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.read-nav-button:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+    color: var(--color-accent);
+}
+
+.read-nav-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.read-nav-button .material-icons {
+    font-size: 1.5rem;
+}

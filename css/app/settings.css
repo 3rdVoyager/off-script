@@ -72,12 +72,6 @@ input.settings-control--toggle {
     cursor: pointer;
 }
 
-.settings-empty-message {
-    color: var(--color-muted);
-    margin: 0;
-    padding: 1.25rem;
-}
-
 @media (max-width: 40rem) {
     .settings-row {
         flex-direction: column;

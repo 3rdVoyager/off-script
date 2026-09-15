@@ -30,6 +30,11 @@ if (scriptList) {
             }
 
             deleteScriptSettings(scriptId);
+
+            if (typeof deleteScriptProgress === "function") {
+                deleteScriptProgress(scriptId);
+            }
+
             renderScriptList();
             updateSidebarScriptTitle();
             return;
@@ -70,10 +75,7 @@ function renderScriptList() {
     scriptList.replaceChildren();
 
     if (scripts.length === 0) {
-        const empty = document.createElement("p");
-        empty.className = "empty-state";
-        empty.textContent = "No scripts saved yet. Add one below.";
-        scriptList.appendChild(empty);
+        scriptList.appendChild(createEmptyState("No scripts saved yet. Add one below."));
         return;
     }
 

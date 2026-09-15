@@ -14,7 +14,14 @@ function renderOverview() {
     overviewRoot.replaceChildren();
 
     if (!script) {
-        overviewRoot.appendChild(createEmptyState());
+        overviewRoot.appendChild(createEmptyState(
+            "No active script. Add or select one on Manage Scripts.",
+            {
+                action: { label: "Manage Scripts", href: "/app/scripts/" },
+                centered: true,
+                wrapInSection: true,
+            }
+        ));
         return;
     }
 
@@ -22,27 +29,6 @@ function renderOverview() {
     overviewRoot.appendChild(createStatsSection(script));
     overviewRoot.appendChild(createCharactersSection(script));
     overviewRoot.appendChild(createStructureSection(script));
-}
-
-function createEmptyState() {
-    const section = document.createElement("section");
-    section.className = "page-section";
-
-    const empty = document.createElement("div");
-    empty.className = "empty-state overview-empty-state";
-
-    const message = document.createElement("p");
-    message.textContent = "No active script. Add or select one on Manage Scripts.";
-    empty.appendChild(message);
-
-    const link = document.createElement("a");
-    link.href = "/app/scripts/";
-    link.className = "button-primary";
-    link.textContent = "Manage Scripts";
-    empty.appendChild(link);
-
-    section.appendChild(empty);
-    return section;
 }
 
 function createScriptHeader(script) {
