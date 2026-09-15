@@ -7,7 +7,7 @@ function getSidebarScriptTitle() {
 }
 
 function updateSidebarScriptTitle() {
-    const titleElement = document.querySelector(".sidebar-section-title");
+    const titleElement = document.querySelector(".sidebar-active-script-title");
 
     if (!titleElement) {
         return;
@@ -22,21 +22,26 @@ if (savedCollapsed) {
 }
 const sidebarMarkup = `
     <nav class="app-sidebar" aria-label="Main navigation">
-        <header>
-            <div class="app-sidebar-header-brand">
-                <img src="/assets/favicon/web-app-manifest-512x512.png" />
-                <h1>OffScript!</h1>
+        <div class="sidebar-top">
+            <header>
+                <div class="app-sidebar-header-brand">
+                    <img src="/assets/favicon/web-app-manifest-512x512.png" />
+                    <h1>OffScript!</h1>
+                </div>
+                <button class="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true">
+                    <span class="material-icons" aria-hidden="true">chevron_left</span>
+                </button>
+            </header>
+            <div class="sidebar-active-script">
+                <p class="sidebar-section-label">Active Script</p>
+                <p class="sidebar-active-script-title">${getSidebarScriptTitle()}</p>
             </div>
-            <button class="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true">
-                <span class="material-icons" aria-hidden="true">chevron_left</span>
-            </button>
-        </header>
+        </div>
         <ul>
             <li><a href="/app/" title="Dashboard"><span class="material-icons" aria-hidden="true">dashboard</span><span class="nav-link-label">Dashboard</span></a></li>
         </ul>
         <div>
-            <p class="sidebar-section-label">Current Script</p>
-            <p class="sidebar-section-title">${getSidebarScriptTitle()}</p>
+            <p class="sidebar-section-label">Script Tools</p>
             <ul>
                 <li><a href="/app/overview/" title="Overview"><span class="material-icons" aria-hidden="true">book</span><span class="nav-link-label">Overview</span></a></li>
                 <li><a href="/app/practice/" title="Practice"><span class="material-icons" aria-hidden="true">mic</span><span class="nav-link-label">Practice</span></a></li>

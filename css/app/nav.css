@@ -53,6 +53,13 @@ body.sidebar-collapsed .app-sidebar {
     gap: 0.5rem;
 }
 
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: -1rem;
+}
+
 .app-sidebar header {
     position: relative;
     font-size: 1rem;
@@ -106,7 +113,7 @@ body.sidebar-collapsed .app-sidebar-header-brand img {
 }
 
 body.sidebar-collapsed .sidebar-section-label,
-body.sidebar-collapsed .sidebar-section-title {
+body.sidebar-collapsed .sidebar-active-script {
     visibility: hidden;
 }
 
@@ -126,10 +133,27 @@ body.sidebar-collapsed .nav-link-label {
     white-space: nowrap;
 }
 
-.sidebar-section-title {
-    font-size: 0.9rem;
-    color: var(--color-accent);
-    padding: 0 0.75rem 0.25rem;
+.sidebar-active-script {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0.5rem;
+}
+
+.sidebar-active-script .sidebar-section-label {
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: 0.35rem;
+}
+
+.sidebar-active-script-title {
+    font-family: var(--heading-font);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
