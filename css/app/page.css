@@ -58,6 +58,21 @@
     margin-bottom: 0.5rem;
 }
 
+.tool-card-description {
+    color: var(--color-muted);
+    margin: 0;
+}
+
+.tool-card--placeholder {
+    cursor: default;
+}
+
+.tool-card--placeholder:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+    color: inherit;
+}
+
 .add-script-form-fields {
     --upload-field-height: 12rem;
 

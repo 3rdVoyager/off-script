@@ -41,11 +41,18 @@ const sidebarMarkup = `
             <li><a href="/app/" title="Dashboard"><span class="material-icons" aria-hidden="true">dashboard</span><span class="nav-link-label">Dashboard</span></a></li>
         </ul>
         <div>
-            <p class="sidebar-section-label">Script Tools</p>
+            <p class="sidebar-section-label">Script</p>
             <ul>
                 <li><a href="/app/overview/" title="Overview"><span class="material-icons" aria-hidden="true">book</span><span class="nav-link-label">Overview</span></a></li>
-                <li><a href="/app/practice/" title="Practice"><span class="material-icons" aria-hidden="true">mic</span><span class="nav-link-label">Practice</span></a></li>
                 <li><a href="/app/progress/" title="Progress"><span class="material-icons" aria-hidden="true">trending_up</span><span class="nav-link-label">Progress</span></a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="sidebar-section-label">Practice</p>
+            <ul>
+                <li><a href="/app/practice/read/" title="Read"><span class="material-icons" aria-hidden="true">menu_book</span><span class="nav-link-label">Read</span></a></li>
+                <li><a href="/app/practice/recite/" title="Recite"><span class="material-icons" aria-hidden="true">mic</span><span class="nav-link-label">Recite</span></a></li>
+                <li><a href="/app/practice/recall/" title="Recall"><span class="material-icons" aria-hidden="true">psychology</span><span class="nav-link-label">Recall</span></a></li>
             </ul>
         </div>
         <div class="nav-section--bottom">
