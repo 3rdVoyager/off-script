@@ -22,21 +22,15 @@ if (savedCollapsed) {
 }
 const sidebarMarkup = `
     <nav class="app-sidebar" aria-label="Main navigation">
-        <div class="sidebar-top">
-            <header>
-                <div class="app-sidebar-header-brand">
-                    <img src="/assets/favicon/web-app-manifest-512x512.png" />
-                    <h1>OffScript!</h1>
-                </div>
-                <button class="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true">
-                    <span class="material-icons" aria-hidden="true">chevron_left</span>
-                </button>
-            </header>
-            <div class="sidebar-active-script">
-                <p class="sidebar-section-label">Active Script</p>
-                <p class="sidebar-active-script-title">${getSidebarScriptTitle()}</p>
+        <header>
+            <div class="app-sidebar-header-brand">
+                <img src="/assets/favicon/web-app-manifest-512x512.png" />
+                <h1>OffScript!</h1>
             </div>
-        </div>
+            <button class="sidebar-toggle" type="button" aria-label="Collapse navigation" aria-expanded="true">
+                <span class="material-icons" aria-hidden="true">chevron_left</span>
+            </button>
+        </header>
         <ul>
             <li><a href="/app/" title="Dashboard"><span class="material-icons" aria-hidden="true">dashboard</span><span class="nav-link-label">Dashboard</span></a></li>
         </ul>
@@ -55,12 +49,18 @@ const sidebarMarkup = `
                 <li><a href="/app/practice/recall/" title="Recall"><span class="material-icons" aria-hidden="true">psychology</span><span class="nav-link-label">Recall</span></a></li>
             </ul>
         </div>
-        <div class="nav-section--bottom">
-            <p class="sidebar-section-label">Settings</p>
-            <ul>
-                <li><a href="/app/scripts/" title="Manage Scripts"><span class="material-icons" aria-hidden="true">library_books</span><span class="nav-link-label">Manage Scripts</span></a></li>
-                <li><a href="/app/settings/" title="Settings"><span class="material-icons" aria-hidden="true">settings</span><span class="nav-link-label">Settings</span></a></li>
-            </ul>
+        <div class="sidebar-footer">
+            <div class="sidebar-active-script">
+                <p class="sidebar-section-label">Active Script</p>
+                <p class="sidebar-active-script-title">${getSidebarScriptTitle()}</p>
+            </div>
+            <div class="nav-section--bottom">
+                <p class="sidebar-section-label">Settings</p>
+                <ul>
+                    <li><a href="/app/scripts/" title="Manage Scripts"><span class="material-icons" aria-hidden="true">library_books</span><span class="nav-link-label">Manage Scripts</span></a></li>
+                    <li><a href="/app/settings/" title="Settings"><span class="material-icons" aria-hidden="true">settings</span><span class="nav-link-label">Settings</span></a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 `;

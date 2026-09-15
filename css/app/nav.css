@@ -53,13 +53,6 @@ body.sidebar-collapsed .app-sidebar {
     gap: 0.5rem;
 }
 
-.sidebar-top {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: -1rem;
-}
-
 .app-sidebar header {
     position: relative;
     font-size: 1rem;
@@ -133,8 +126,15 @@ body.sidebar-collapsed .nav-link-label {
     white-space: nowrap;
 }
 
+.sidebar-footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
 .sidebar-active-script {
-    margin-top: 0.75rem;
+    margin-bottom: 0;
     padding: 0.75rem;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -211,9 +211,15 @@ body.sidebar-collapsed .app-sidebar ul li a {
 }
 
 .app-sidebar .nav-section--bottom {
-    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     padding-top: 1rem;
     border-top: 1px solid var(--color-border);
+}
+
+.app-sidebar .nav-section--bottom .sidebar-section-label {
+    margin-top: 0;
 }
 
 .app-sidebar ul li a:focus-visible,
