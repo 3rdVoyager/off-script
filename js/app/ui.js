@@ -46,15 +46,13 @@ function updateInterface() {
     }
 
     // Practice tools keep their own session state; only refresh passive pages here.
-    const pageUpdaters = [
-        { root: "[data-overview-root]", render: renderOverview },
-        { root: "[data-script-list]", render: renderScriptList },
-    ];
+    // Use typeof checks so pages without overview.js / scripts.js don't throw on load.
+    if (document.querySelector("[data-overview-root]") && typeof renderOverview === "function") {
+        renderOverview();
+    }
 
-    for (const { root, render } of pageUpdaters) {
-        if (document.querySelector(root) && typeof render === "function") {
-            render();
-        }
+    if (document.querySelector("[data-script-list]") && typeof renderScriptList === "function") {
+        renderScriptList();
     }
 }
 
