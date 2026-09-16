@@ -116,6 +116,10 @@ function updateInterface() {
     if (document.querySelector("[data-progress-root]") && typeof renderProgress === "function") {
         renderProgress();
     }
+
+    if (document.querySelector("[data-dashboard-root]") && typeof renderDashboard === "function") {
+        renderDashboard();
+    }
 }
 
 function createPracticeEmptyState(reason, options = {}) {

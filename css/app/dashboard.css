@@ -1,0 +1,226 @@
+.dashboard-hero {
+    margin-bottom: 0;
+}
+
+.dashboard-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.dashboard-hero-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-hero-title {
+    font-family: var(--heading-font);
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-hero-subtitle {
+    color: var(--color-muted);
+    max-width: 32rem;
+    margin: 0;
+}
+
+.dashboard-hero-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+.dashboard-hero-link:hover {
+    text-decoration: underline;
+}
+
+.dashboard-section-intro {
+    color: var(--color-muted);
+    margin: -0.5rem 0 1.25rem;
+    max-width: 40rem;
+}
+
+.dashboard-tool-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-tool-card-icon {
+    display: block;
+    font-size: 2rem;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+}
+
+.getting-started {
+    margin-bottom: 0;
+}
+
+.getting-started-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.getting-started-header .page-section-title {
+    margin-bottom: 0;
+}
+
+.getting-started-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.getting-started-toggle .material-icons {
+    font-size: 1.25rem;
+}
+
+.getting-started--collapsed {
+    margin-bottom: 0;
+}
+
+.getting-started-collapsed-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface);
+}
+
+.getting-started-collapsed-label {
+    font-weight: 600;
+    margin: 0 0 0.125rem;
+}
+
+.getting-started-collapsed-progress {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.getting-started-complete-text {
+    color: var(--color-muted);
+    margin: 0;
+    max-width: 40rem;
+}
+
+.getting-started-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.getting-started-step {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface);
+}
+
+.getting-started-step--complete {
+    background-color: var(--color-background);
+}
+
+.getting-started-step-icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    color: var(--color-muted);
+    margin-top: 0.125rem;
+}
+
+.getting-started-step--complete .getting-started-step-icon {
+    color: var(--color-success);
+}
+
+.getting-started-step-content {
+    min-width: 0;
+}
+
+.getting-started-step-label,
+.getting-started-step-link {
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+}
+
+.getting-started-step-link {
+    display: inline-block;
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.getting-started-step-link:hover {
+    text-decoration: underline;
+}
+
+.getting-started-step-description {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+.dashboard-welcome-title {
+    font-family: var(--heading-font);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.dashboard-quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1rem;
+}
+
+.dashboard-quick-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.dashboard-quick-link:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-raised);
+}
+
+.dashboard-quick-link-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+.dashboard-quick-link-title {
+    font-weight: 600;
+}
+
+@media (max-width: 40rem) {
+    .dashboard-hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
