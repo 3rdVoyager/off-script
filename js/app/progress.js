@@ -19,9 +19,9 @@ function renderProgress() {
 
     if (!script) {
         progressRoot.appendChild(createEmptyState(
-            "No active script. Add or select one on Manage Scripts.",
+            "No active script. Add or select one in Settings.",
             {
-                action: { label: "Manage Scripts", href: "/app/scripts/" },
+                action: { label: "Open Settings", href: "/app/settings/" },
                 centered: true,
                 wrapInSection: true,
             }

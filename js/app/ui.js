@@ -104,13 +104,17 @@ function updateInterface() {
     }
 
     // Practice tools keep their own session state; only refresh passive pages here.
-    // Use typeof checks so pages without overview.js / scripts.js don't throw on load.
+    // Use typeof checks so pages without overview.js / settings.js don't throw on load.
     if (document.querySelector("[data-overview-root]") && typeof renderOverview === "function") {
         renderOverview();
     }
 
-    if (document.querySelector("[data-script-list]") && typeof renderScriptList === "function") {
-        renderScriptList();
+    if (
+        (document.querySelector("[data-script-settings-root]") ||
+            document.querySelector("[data-practice-settings-root]")) &&
+        typeof renderSettingsPage === "function"
+    ) {
+        renderSettingsPage();
     }
 
     if (document.querySelector("[data-progress-root]") && typeof renderProgress === "function") {
@@ -126,7 +130,7 @@ function createPracticeEmptyState(reason, options = {}) {
     const states = {
         "no-script": {
             message: "No active script.",
-            action: { label: "Manage Scripts", href: "/app/scripts/" },
+            action: { label: "Open Settings", href: "/app/settings/" },
         },
         "no-character": {
             message: "Choose at least one practice character in Settings before practicing.",

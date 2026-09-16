@@ -26,9 +26,9 @@ function renderDashboard() {
 
     if (!script) {
         dashboardRoot.appendChild(createEmptyState(
-            "No active script. Select one on Manage Scripts.",
+            "No active script. Select one in Settings.",
             {
-                action: { label: "Manage Scripts", href: "/app/scripts/" },
+                action: { label: "Open Settings", href: "/app/settings/" },
                 centered: true,
                 wrapInSection: true,
             }
@@ -204,9 +204,9 @@ function createWelcomeSection() {
     actions.className = "page-actions";
 
     const scriptsLink = document.createElement("a");
-    scriptsLink.href = "/app/scripts/";
+    scriptsLink.href = "/app/settings/";
     scriptsLink.className = "button-primary";
-    scriptsLink.textContent = "Add your first script";
+    scriptsLink.textContent = "Open Settings";
     actions.appendChild(scriptsLink);
 
     card.appendChild(actions);
@@ -368,8 +368,7 @@ function createQuickLinksSection() {
     const links = [
         { href: "/app/overview/", label: "Overview", icon: "book", description: "Characters, scenes, and script structure." },
         { href: "/app/progress/", label: "Progress", icon: "trending_up", description: "Mastery breakdown by character and scene." },
-        { href: "/app/scripts/", label: "Manage Scripts", icon: "library_books", description: "Add, switch, or remove scripts." },
-        { href: "/app/settings/", label: "Settings", icon: "settings", description: "Practice characters and scenes." },
+        { href: "/app/settings/", label: "Settings", icon: "settings", description: "Choose your script and practice characters." },
     ];
 
     for (const item of links) {

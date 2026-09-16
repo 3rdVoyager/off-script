@@ -106,9 +106,6 @@ const sidebarHTML = `
                 <a href="/app/progress/" class="sidebar-footer-action" title="Progress">
                     <span class="material-icons" aria-hidden="true">trending_up</span>
                 </a>
-                <a href="/app/scripts/" class="sidebar-footer-action" title="Manage Scripts">
-                    <span class="material-icons" aria-hidden="true">library_books</span>
-                </a>
                 <a href="/app/settings/" class="sidebar-footer-action" title="Settings">
                     <span class="material-icons" aria-hidden="true">settings</span>
                 </a>

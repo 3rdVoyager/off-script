@@ -110,8 +110,8 @@ const GETTING_STARTED_STEPS = [
     {
         id: "add-script",
         label: "Add a script",
-        description: "Upload or paste your script JSON on Manage Scripts.",
-        href: "/app/scripts/",
+        description: "Upload or paste your script JSON in Settings.",
+        href: "/app/settings/",
     },
     {
         id: "settings",
