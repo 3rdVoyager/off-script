@@ -60,11 +60,20 @@ function updateSidebarMasteryDial() {
     }
 }
 
+function buildPracticeNavLinks() {
+    return getPracticeToolsForNav()
+        .map(
+            (tool) =>
+                `<li><a href="${tool.href}" title="${tool.label}"><span class="material-icons" aria-hidden="true">${tool.icon}</span><span class="nav-link-label">${tool.label}</span></a></li>`
+        )
+        .join("\n                ");
+}
+
 const savedCollapsed = localStorage.getItem(SIDEBAR_STORAGE_KEY) === "true";
 if (savedCollapsed) {
     document.body.classList.add("sidebar-collapsed");
 }
-const sidebarMarkup = `
+const sidebarHTML = `
     <nav class="app-sidebar" aria-label="Main navigation">
         <header>
             <div class="app-sidebar-header-brand">
@@ -81,9 +90,7 @@ const sidebarMarkup = `
         <div>
             <p class="sidebar-section-label">Practice</p>
             <ul>
-                <li><a href="/app/practice/read/" title="Read"><span class="material-icons" aria-hidden="true">menu_book</span><span class="nav-link-label">Read</span></a></li>
-                <li><a href="/app/practice/recite/" title="Recite"><span class="material-icons" aria-hidden="true">keyboard</span><span class="nav-link-label">Recite</span></a></li>
-                <li><a href="/app/practice/recall/" title="Recall"><span class="material-icons" aria-hidden="true">psychology</span><span class="nav-link-label">Recall</span></a></li>
+                ${buildPracticeNavLinks()}
             </ul>
         </div>
         <div class="sidebar-footer">
@@ -110,7 +117,7 @@ const sidebarMarkup = `
     </nav>
 `;
 
-document.body.insertAdjacentHTML("afterbegin", sidebarMarkup);
+document.body.insertAdjacentHTML("afterbegin", sidebarHTML);
 
 function normalizePath(pathname) {
     let path = pathname;

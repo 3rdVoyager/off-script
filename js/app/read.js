@@ -1,155 +1,143 @@
-const readRoot = document.querySelector("[data-read-root]");
+const readApi = createPracticeApi("read");
 
-const readState = {
-    queue: [],
-    index: 0,
-    revealed: false,
-    script: null,
-    practiceCharacters: [],
-};
+function mountReadTool(root) {
+    const state = {
+        queue: [],
+        index: 0,
+        revealed: false,
+        script: null,
+        practiceCharacters: [],
+    };
 
-let readShell = null;
+    let shell = null;
 
-if (readRoot) {
-    renderReadTool();
-    document.addEventListener("keydown", handleReadKeydown);
-}
+    function renderTool() {
+        root.replaceChildren();
 
-function renderReadTool() {
-    if (!readRoot) {
-        return;
+        const session = readApi.loadSession(state);
+
+        if (!session.ok) {
+            root.appendChild(session.element);
+            shell = null;
+            return;
+        }
+
+        state.revealed = false;
+
+        shell = readApi.createShell({
+            onPrev: () => moveIndex(-1),
+            onNext: () => moveIndex(1),
+        });
+
+        root.appendChild(shell.element);
+        renderStep();
     }
 
-    readRoot.replaceChildren();
+    function renderStep() {
+        if (!shell) {
+            return;
+        }
 
-    const session = loadPracticeSession(readState);
+        const item = readApi.getCurrentItem(state);
 
-    if (!session.ok) {
-        readRoot.appendChild(session.element);
-        readShell = null;
-        return;
+        if (!item) {
+            return;
+        }
+
+        shell.meta.textContent = readApi.formatMeta(item, state.index, state.queue.length);
+        readApi.renderCue(shell.cueSection, item.cue);
+        shell.contentSection.replaceChildren();
+        shell.contentSection.classList.toggle("practice-content--correct", state.revealed);
+        renderLineSection(shell.contentSection, item.line);
+        shell.updateNav(state.index, state.queue.length);
     }
 
-    readState.revealed = false;
+    function renderLineSection(contentSection, line) {
+        const label = document.createElement("p");
+        label.className = "practice-section-label";
+        label.textContent = "Your line";
+        contentSection.appendChild(label);
 
-    readShell = createPracticeToolShell({
-        onPrev: () => moveReadIndex(-1),
-        onNext: () => moveReadIndex(1),
-    });
+        if (state.revealed) {
+            const character = document.createElement("p");
+            character.className = "practice-line-character";
+            character.textContent = line.character;
+            contentSection.appendChild(character);
 
-    readRoot.appendChild(readShell.element);
-    renderReadStep();
-}
+            const text = document.createElement("p");
+            text.className = "practice-line-text";
+            text.textContent = line.text;
+            contentSection.appendChild(text);
+            return;
+        }
 
-function renderReadStep() {
-    if (!readShell) {
-        return;
+        const revealButton = document.createElement("button");
+        revealButton.type = "button";
+        revealButton.className = "practice-reveal-button";
+        revealButton.textContent = "Show line";
+        revealButton.addEventListener("click", revealCurrentLine);
+        contentSection.appendChild(revealButton);
     }
 
-    const item = getPracticeItem(readState.queue, readState.index);
+    function revealCurrentLine() {
+        if (state.revealed) {
+            return;
+        }
 
-    if (!item) {
-        return;
+        const item = readApi.getCurrentItem(state);
+
+        if (!item || !state.script) {
+            return;
+        }
+
+        state.revealed = true;
+        readApi.recordSuccess(state, item);
+        renderStep();
     }
 
-    readShell.meta.textContent = formatPracticeMeta(
-        item,
-        readState.index,
-        readState.queue.length
-    );
+    function moveIndex(delta) {
+        const nextIndex = state.index + delta;
 
-    renderPracticeCue(readShell.cueSection, item.cue);
-    readShell.contentSection.replaceChildren();
-    readShell.contentSection.classList.toggle(readState.revealed);
-    renderReadLineSection(readShell.contentSection, item.line);
-    readShell.updateNav(readState.index, readState.queue.length);
-}
+        if (nextIndex < 0 || nextIndex >= state.queue.length) {
+            return;
+        }
 
-function renderReadLineSection(contentSection, line) {
-    const label = document.createElement("p");
-    label.className = "practice-section-label";
-    label.textContent = "Your line";
-    contentSection.appendChild(label);
-
-    if (readState.revealed) {
-        const character = document.createElement("p");
-        character.className = "practice-line-character";
-        character.textContent = line.character;
-        contentSection.appendChild(character);
-
-        const text = document.createElement("p");
-        text.className = "practice-line-text";
-        text.textContent = line.text;
-        contentSection.appendChild(text);
-        return;
+        state.index = nextIndex;
+        state.revealed = false;
+        renderStep();
     }
 
-    const revealButton = document.createElement("button");
-    revealButton.type = "button";
-    revealButton.className = "practice-reveal-button";
-    revealButton.textContent = "Show line";
-    revealButton.addEventListener("click", revealCurrentLine);
-    contentSection.appendChild(revealButton);
-}
+    function handleKeydown(event) {
+        if (state.queue.length === 0 || isTypingTarget(event.target)) {
+            return;
+        }
 
-function revealCurrentLine() {
-    if (readState.revealed) {
-        return;
-    }
-
-    const item = getPracticeItem(readState.queue, readState.index);
-
-    if (!item || !readState.script) {
-        return;
-    }
-
-    readState.revealed = true;
-
-    const result = recordLineProgress(
-        readState.script.id,
-        item.line.character,
-        item.line.lineId,
-        "read"
-    );
-
-    if (result.ok) {
-        updateInterface();
-    }
-
-    renderReadStep();
-}
-
-function moveReadIndex(delta) {
-    const nextIndex = readState.index + delta;
-
-    if (nextIndex < 0 || nextIndex >= readState.queue.length) {
-        return;
-    }
-
-    readState.index = nextIndex;
-    readState.revealed = false;
-    renderReadStep();
-}
-
-function handleReadKeydown(event) {
-    if (!readRoot || readState.queue.length === 0 || isTypingTarget(event.target)) {
-        return;
-    }
-
-    if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        moveReadIndex(-1);
-    }
-
-    if (event.key === "ArrowRight") {
-        event.preventDefault();
-        moveReadIndex(1);
-    }
-
-    if (event.key === " " || event.key === "Enter") {
-        if (!readState.revealed) {
+        if (event.key === "ArrowLeft") {
             event.preventDefault();
-            revealCurrentLine();
+            moveIndex(-1);
+        }
+
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            moveIndex(1);
+        }
+
+        if (event.key === " " || event.key === "Enter") {
+            if (!state.revealed) {
+                event.preventDefault();
+                revealCurrentLine();
+            }
         }
     }
+
+    document.addEventListener("keydown", handleKeydown);
+    renderTool();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector("[data-read-root]");
+
+    if (root) {
+        mountReadTool(root);
+    }
+});

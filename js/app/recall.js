@@ -1,142 +1,131 @@
-const recallRoot = document.querySelector("[data-recall-root]");
+const recallApi = createPracticeApi("recall");
 
-const recallState = {
-    queue: [],
-    index: 0,
-    completed: false,
-    script: null,
-    practiceCharacters: [],
-};
+function mountRecallTool(root) {
+    const state = {
+        queue: [],
+        index: 0,
+        completed: false,
+        script: null,
+        practiceCharacters: [],
+    };
 
-let recallShell = null;
-let lineInput = null;
+    let shell = null;
+    let lineInput = null;
 
-if (recallRoot) {
-    renderRecallTool();
-    document.addEventListener("keydown", handleRecallKeydown);
+    function renderTool() {
+        root.replaceChildren();
+        lineInput = null;
+
+        const session = recallApi.loadSession(state);
+
+        if (!session.ok) {
+            root.appendChild(session.element);
+            shell = null;
+            return;
+        }
+
+        state.completed = false;
+
+        shell = recallApi.createShell({
+            onPrev: () => moveIndex(-1),
+            onNext: () => moveIndex(1),
+        });
+
+        root.appendChild(shell.element);
+        renderStep();
+    }
+
+    function renderStep() {
+        if (!shell) {
+            return;
+        }
+
+        const item = recallApi.getCurrentItem(state);
+
+        if (!item) {
+            return;
+        }
+
+        state.completed = false;
+
+        shell.meta.textContent = recallApi.formatMeta(item, state.index, state.queue.length);
+        recallApi.renderCue(shell.cueSection, item.cue);
+        shell.contentSection.replaceChildren();
+        renderInputSection(shell.contentSection, item.line);
+        shell.updateNav(state.index, state.queue.length);
+    }
+
+    function renderInputSection(contentSection, line) {
+        const label = document.createElement("p");
+        label.className = "practice-section-label";
+        label.textContent = "Type your line";
+        contentSection.appendChild(label);
+
+        const hint = document.createElement("p");
+        hint.className = "practice-cue-empty";
+        hint.textContent = "Type the full line from memory. Small typos are OK — press Check or Enter.";
+        contentSection.appendChild(hint);
+
+        lineInput = createFullLineInput(line.text, {
+            onComplete: handleLineComplete,
+            onEnterWhenComplete: () => moveIndex(1),
+        });
+
+        contentSection.appendChild(lineInput.element);
+        lineInput.focus();
+    }
+
+    function handleLineComplete() {
+        if (state.completed) {
+            return;
+        }
+
+        const item = recallApi.getCurrentItem(state);
+
+        if (!item || !state.script) {
+            return;
+        }
+
+        state.completed = true;
+        recallApi.recordSuccess(state, item);
+    }
+
+    function moveIndex(delta) {
+        const nextIndex = state.index + delta;
+
+        if (nextIndex < 0 || nextIndex >= state.queue.length) {
+            return;
+        }
+
+        state.index = nextIndex;
+        state.completed = false;
+        renderStep();
+    }
+
+    function handleKeydown(event) {
+        if (state.queue.length === 0 || isTypingTarget(event.target)) {
+            return;
+        }
+
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            moveIndex(-1);
+        }
+
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            moveIndex(1);
+        }
+    }
+
+    document.addEventListener("keydown", handleKeydown);
+    renderTool();
 }
 
-function renderRecallTool() {
-    if (!recallRoot) {
-        return;
+document.addEventListener("DOMContentLoaded", () => {
+    const root = document.querySelector("[data-recall-root]");
+
+    if (root) {
+        mountRecallTool(root);
     }
-
-    recallRoot.replaceChildren();
-    lineInput = null;
-
-    const session = loadPracticeSession(recallState);
-
-    if (!session.ok) {
-        recallRoot.appendChild(session.element);
-        recallShell = null;
-        return;
-    }
-
-    recallState.completed = false;
-
-    recallShell = createPracticeToolShell({
-        onPrev: () => moveRecallIndex(-1),
-        onNext: () => moveRecallIndex(1),
-    });
-
-    recallRoot.appendChild(recallShell.element);
-    renderRecallStep();
-}
-
-function renderRecallStep() {
-    if (!recallShell) {
-        return;
-    }
-
-    const item = getPracticeItem(recallState.queue, recallState.index);
-
-    if (!item) {
-        return;
-    }
-
-    recallState.completed = false;
-
-    recallShell.meta.textContent = formatPracticeMeta(
-        item,
-        recallState.index,
-        recallState.queue.length
-    );
-
-    renderPracticeCue(recallShell.cueSection, item.cue);
-    recallShell.contentSection.replaceChildren();
-    renderRecallInputSection(recallShell.contentSection, item.line);
-    recallShell.updateNav(recallState.index, recallState.queue.length);
-}
-
-function renderRecallInputSection(contentSection, line) {
-    const label = document.createElement("p");
-    label.className = "practice-section-label";
-    label.textContent = "Type your line";
-    contentSection.appendChild(label);
-
-    const hint = document.createElement("p");
-    hint.className = "practice-cue-empty";
-    hint.textContent = "Type the full line from memory. Small typos are OK — press Check or Enter.";
-    contentSection.appendChild(hint);
-
-    lineInput = createFullLineInput(line.text, {
-        onComplete: handleRecallLineComplete,
-        onEnterWhenComplete: () => moveRecallIndex(1),
-    });
-
-    contentSection.appendChild(lineInput.element);
-    lineInput.focus();
-}
-
-function handleRecallLineComplete() {
-    if (recallState.completed) {
-        return;
-    }
-
-    const item = getPracticeItem(recallState.queue, recallState.index);
-
-    if (!item || !recallState.script) {
-        return;
-    }
-
-    recallState.completed = true;
-
-    const result = recordLineProgress(
-        recallState.script.id,
-        item.line.character,
-        item.line.lineId,
-        "recall"
-    );
-
-    if (result.ok) {
-        updateInterface();
-    }
-}
-
-function moveRecallIndex(delta) {
-    const nextIndex = recallState.index + delta;
-
-    if (nextIndex < 0 || nextIndex >= recallState.queue.length) {
-        return;
-    }
-
-    recallState.index = nextIndex;
-    recallState.completed = false;
-    renderRecallStep();
-}
-
-function handleRecallKeydown(event) {
-    if (!recallRoot || recallState.queue.length === 0 || isTypingTarget(event.target)) {
-        return;
-    }
-
-    if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        moveRecallIndex(-1);
-    }
-
-    if (event.key === "ArrowRight") {
-        event.preventDefault();
-        moveRecallIndex(1);
-    }
-}
+});
