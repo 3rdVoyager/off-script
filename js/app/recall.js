@@ -121,11 +121,3 @@ function mountRecallTool(root) {
     document.addEventListener("keydown", handleKeydown);
     renderTool();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const root = document.querySelector("[data-recall-root]");
-
-    if (root) {
-        mountRecallTool(root);
-    }
-});

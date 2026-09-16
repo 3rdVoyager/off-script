@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OffScript! | Recall</title>
+    <title>OffScript! | Practice</title>
     <link
       rel="icon"
       type="image/png"
@@ -28,18 +28,21 @@
     <script src="/js/app/practice-tool.js" defer></script>
     <script src="/js/app/practice-api.js" defer></script>
     <script src="/js/app/line-typing.js" defer></script>
-    <script src="/js/app/nav.js" defer></script>
+    <script src="/js/app/read.js" defer></script>
+    <script src="/js/app/recite.js" defer></script>
     <script src="/js/app/recall.js" defer></script>
+    <script src="/js/app/nav.js" defer></script>
+    <script src="/js/app/practice-runner.js" defer></script>
   </head>
   <body>
     <main class="app-page">
       <header class="page-header">
-        <h1>Recall</h1>
-        <p>Read the cue, then type your full line from memory. Use arrow keys to move between lines.</p>
+        <h1 data-practice-title>Practice</h1>
+        <p data-practice-description></p>
       </header>
 
       <section class="page-section">
-        <div data-recall-root></div>
+        <div data-practice-root></div>
       </section>
     </main>
   </body>

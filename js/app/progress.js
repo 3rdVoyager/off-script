@@ -323,19 +323,19 @@ function createPracticeCallToAction() {
     actions.className = "page-actions";
 
     const readLink = document.createElement("a");
-    readLink.href = "/app/practice/read/";
+    readLink.href = "/app/practice/?tool=read";
     readLink.className = "button-primary";
     readLink.textContent = "Start Read";
     actions.appendChild(readLink);
 
     const reciteLink = document.createElement("a");
-    reciteLink.href = "/app/practice/recite/";
+    reciteLink.href = "/app/practice/?tool=recite";
     reciteLink.className = "button-secondary";
     reciteLink.textContent = "Start Recite";
     actions.appendChild(reciteLink);
 
     const recallLink = document.createElement("a");
-    recallLink.href = "/app/practice/recall/";
+    recallLink.href = "/app/practice/?tool=recall";
     recallLink.className = "button-secondary";
     recallLink.textContent = "Start Recall";
     actions.appendChild(recallLink);

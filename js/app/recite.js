@@ -121,11 +121,3 @@ function mountReciteTool(root) {
     document.addEventListener("keydown", handleKeydown);
     renderTool();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const root = document.querySelector("[data-recite-root]");
-
-    if (root) {
-        mountReciteTool(root);
-    }
-});

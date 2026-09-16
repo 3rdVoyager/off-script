@@ -133,12 +133,40 @@ function normalizePath(pathname) {
     return path || "/";
 }
 
+function getPracticeToolFromPath(pathname, search) {
+    if (normalizePath(pathname) !== "/app/practice") {
+        return null;
+    }
+
+    return new URLSearchParams(search).get("tool") || "read";
+}
+
+function getPracticeToolFromHref(href) {
+    const url = new URL(href, window.location.origin);
+
+    return getPracticeToolFromPath(url.pathname, url.search);
+}
+
 function setActiveNavLink() {
     const currentPath = normalizePath(window.location.pathname);
+    const currentPracticeTool = getPracticeToolFromPath(
+        window.location.pathname,
+        window.location.search
+    );
 
     document.querySelectorAll(".app-sidebar a[href], .sidebar-footer-action[href]").forEach((link) => {
-        const linkPath = normalizePath(link.getAttribute("href"));
-        const isActive = currentPath === linkPath;
+        const href = link.getAttribute("href");
+        const linkUrl = new URL(href, window.location.origin);
+        const linkPath = normalizePath(linkUrl.pathname);
+        const linkPracticeTool = getPracticeToolFromHref(href);
+
+        let isActive = false;
+
+        if (linkPracticeTool !== null) {
+            isActive = currentPracticeTool === linkPracticeTool;
+        } else {
+            isActive = currentPath === linkPath;
+        }
 
         link.classList.toggle("is-active", isActive);
 

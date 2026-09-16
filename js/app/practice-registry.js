@@ -3,19 +3,25 @@ const PRACTICE_TOOL_REGISTRY = [
         id: "read",
         label: "Read",
         icon: "menu_book",
-        href: "/app/practice/read/",
+        href: "/app/practice/?tool=read",
+        description:
+            "Read the cue, try to remember your line, then reveal it. Use arrow keys to move between lines.",
     },
     {
         id: "recite",
         label: "Recite",
         icon: "keyboard",
-        href: "/app/practice/recite/",
+        href: "/app/practice/?tool=recite",
+        description:
+            "Read the cue, then type your line — the first letter of each word fills in the rest. Use arrow keys to move between lines.",
     },
     {
         id: "recall",
         label: "Recall",
         icon: "psychology",
-        href: "/app/practice/recall/",
+        href: "/app/practice/?tool=recall",
+        description:
+            "Read the cue, then type your full line from memory. Use arrow keys to move between lines.",
     },
 ];
 

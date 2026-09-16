@@ -133,11 +133,3 @@ function mountReadTool(root) {
     document.addEventListener("keydown", handleKeydown);
     renderTool();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    const root = document.querySelector("[data-read-root]");
-
-    if (root) {
-        mountReadTool(root);
-    }
-});
