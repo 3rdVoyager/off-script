@@ -73,6 +73,78 @@
     color: inherit;
 }
 
+.add-script-help {
+    margin-bottom: 1.5rem;
+}
+
+.add-script-help-title {
+    font-family: var(--body-font);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.add-script-help p {
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+    max-width: 42rem;
+}
+
+.add-script-help-steps {
+    margin: 0 0 1.25rem 1.25rem;
+    color: var(--color-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 42rem;
+}
+
+.add-script-help-steps strong,
+.add-script-help code {
+    color: var(--color-text);
+}
+
+.add-script-help code {
+    font-size: 0.875em;
+}
+
+.add-script-prompt {
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    overflow: hidden;
+}
+
+.add-script-prompt-summary {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.add-script-prompt-summary:hover {
+    background-color: var(--color-surface-raised);
+    color: var(--color-accent);
+}
+
+.add-script-prompt-summary::-webkit-details-marker {
+    display: none;
+}
+
+.add-script-prompt-text {
+    margin: 0;
+    padding: 1rem;
+    border-top: 1px solid var(--color-border);
+    overflow-x: auto;
+    font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .add-script-form-fields {
     --upload-field-height: 12rem;
 

@@ -41,6 +41,62 @@
 
       <section class="page-section">
         <h2 class="page-section-title">Add script</h2>
+
+        <aside class="add-script-help card">
+          <h3 class="add-script-help-title">Don&rsquo;t have a JSON file?</h3>
+          <p>
+            OffScript needs your script as a JSON file in a specific shape. If you only have a PDF, Word doc,
+            or plain text, a chatbot can convert it for you in a few minutes.
+          </p>
+          <ol class="add-script-help-steps">
+            <li>Open a chatbot you trust (ChatGPT, Claude, Gemini, etc.).</li>
+            <li>Copy the prompt below and paste it into a new chat.</li>
+            <li>Paste your script text under the prompt, or attach a file if the chatbot supports it.</li>
+            <li>Copy the JSON reply and paste it into the box below, or save it as a .json file and upload.</li>
+            <li>Click <strong>Add Script</strong>. If something is wrong, try again with a different chatbot.</li>
+          </ol>
+
+          <details class="add-script-prompt">
+            <summary class="add-script-prompt-summary">Copy this prompt for your chatbot</summary>
+            <pre class="add-script-prompt-text"><code>Convert my script into JSON for OffScript, a line memorization tool that can be accessed at off-script.pages.dev. Return only valid JSON, with no markdown fences and no extra commentary.
+
+Use this structure:
+
+{
+  "schemaVersion": 1,
+  "type": "play",
+  "title": "Play title here",
+  "notes": "",
+  "acts": [
+    {
+      "title": "Act I",
+      "scenes": [
+        {
+          "title": "Scene 1",
+          "lines": [
+            { "type": "direction", "text": "Stage direction here." },
+            { "type": "line", "character": "Character Name", "text": "Spoken line here." }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Rules:
+- schemaVersion must be 1 and type must be "play"
+- Each act needs a title and at least one scene; each scene needs a title and a lines array
+- Every line is either type "direction" (text only) or type "line" (character + text)
+- Use the same character name spelling and capitalization throughout
+- Do not include an "id" field; OffScript assigns that when you import
+- Keep stage directions as separate direction lines, not mixed into spoken lines
+
+My script:
+
+[Paste or attach your script here]</code></pre>
+          </details>
+        </aside>
+
         <form class="add-script-form stack">
           <div class="add-script-form-fields">
             <div class="add-script-form-field">
