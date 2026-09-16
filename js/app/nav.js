@@ -25,7 +25,8 @@ function getSidebarMasteryDisplay() {
 
     const percent = getScriptMasteryPercent(
         activeScript,
-        settings.practiceCharacters
+        settings.practiceCharacters,
+        settings.practiceScenes
     );
 
     return { percent, label: `${percent}%` };

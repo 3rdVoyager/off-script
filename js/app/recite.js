@@ -59,8 +59,7 @@ function renderReciteStep() {
     reciteShell.meta.textContent = formatPracticeMeta(
         item,
         reciteState.index,
-        reciteState.queue.length,
-        reciteState.practiceCharacters
+        reciteState.queue.length
     );
 
     renderPracticeCue(reciteShell.cueSection, item.cue);

@@ -55,8 +55,7 @@ function renderReadStep() {
     readShell.meta.textContent = formatPracticeMeta(
         item,
         readState.index,
-        readState.queue.length,
-        readState.practiceCharacters
+        readState.queue.length
     );
 
     renderPracticeCue(readShell.cueSection, item.cue);

@@ -66,8 +66,12 @@ function createPracticeEmptyState(reason, options = {}) {
             message: "Choose at least one practice character in Settings before practicing.",
             action: { label: "Open Settings", href: "/app/settings/" },
         },
+        "no-scenes": {
+            message: "Choose at least one practice scene in Settings before practicing.",
+            action: { label: "Open Settings", href: "/app/settings/" },
+        },
         "no-lines": {
-            message: "No lines found for your selected characters.",
+            message: "No lines found for your selected characters and scenes.",
             action: { label: "Open Settings", href: "/app/settings/" },
         },
     };

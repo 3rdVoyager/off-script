@@ -7,12 +7,17 @@ function loadPracticeSession(state) {
 
     const settings = getScriptSettings(script.id);
     const practiceCharacters = settings.practiceCharacters;
+    const practiceScenes = settings.practiceScenes;
 
     if (practiceCharacters.length === 0) {
         return { ok: false, element: createPracticeEmptyState("no-character") };
     }
 
-    const queue = buildPracticeQueue(script, practiceCharacters);
+    if (Array.isArray(practiceScenes) && practiceScenes.length === 0) {
+        return { ok: false, element: createPracticeEmptyState("no-scenes") };
+    }
+
+    const queue = buildPracticeQueue(script, practiceCharacters, practiceScenes);
 
     if (queue.length === 0) {
         return {
@@ -42,16 +47,8 @@ function getPracticeItem(queue, index) {
     return queue[index] ?? null;
 }
 
-function formatPracticeMeta(item, index, total, practiceCharacters = []) {
-    const parts = [];
-
-    if (practiceCharacters.length > 1) {
-        parts.push(item.line.character);
-    }
-
-    parts.push(item.line.actTitle, item.line.sceneTitle, `Line ${index + 1} of ${total}`);
-
-    return parts.join(" · ");
+function formatPracticeMeta(item, index, total) {
+    return `${item.line.actTitle} · ${item.line.sceneTitle} · Line ${index + 1} of ${total}`;
 }
 
 function renderPracticeCue(cueSection, cue) {

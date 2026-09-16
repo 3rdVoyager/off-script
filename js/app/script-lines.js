@@ -1,5 +1,17 @@
+function createSceneId(actIndex, sceneIndex) {
+    return `${actIndex}-${sceneIndex}`;
+}
+
 function createLineId(actIndex, sceneIndex, lineIndex) {
     return `${actIndex}-${sceneIndex}-${lineIndex}`;
+}
+
+function isSceneInPractice(actIndex, sceneIndex, practiceScenes) {
+    if (practiceScenes === null) {
+        return true;
+    }
+
+    return practiceScenes.includes(createSceneId(actIndex, sceneIndex));
 }
 
 function flattenScriptLines(script) {
@@ -40,7 +52,7 @@ function getCueLine(lines, lineIndex) {
     return null;
 }
 
-function buildPracticeQueue(script, practiceCharacters) {
+function buildPracticeQueue(script, practiceCharacters, practiceScenes) {
     const allLines = flattenScriptLines(script);
     const characterSet = new Set(practiceCharacters);
     const items = [];
@@ -49,6 +61,10 @@ function buildPracticeQueue(script, practiceCharacters) {
         const line = allLines[index];
 
         if (line.type !== "line" || !characterSet.has(line.character)) {
+            continue;
+        }
+
+        if (!isSceneInPractice(line.actIndex, line.sceneIndex, practiceScenes)) {
             continue;
         }
 

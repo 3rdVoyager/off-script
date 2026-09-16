@@ -5,6 +5,7 @@ const DEFAULT_GLOBAL_SETTINGS = {};
 
 const DEFAULT_SCRIPT_SETTINGS = {
     practiceCharacters: [],
+    practiceScenes: null,
 };
 
 function normalizePracticeCharacters(saved) {
@@ -23,6 +24,20 @@ function normalizePracticeCharacters(saved) {
     }
 
     return [];
+}
+
+function normalizePracticeScenes(saved) {
+    if (!saved || typeof saved !== "object" || !("practiceScenes" in saved)) {
+        return null;
+    }
+
+    if (!Array.isArray(saved.practiceScenes)) {
+        return null;
+    }
+
+    return saved.practiceScenes.filter(
+        (sceneId) => typeof sceneId === "string" && sceneId.trim()
+    );
 }
 
 function getGlobalSettings() {
@@ -74,6 +89,7 @@ function getScriptSettings(scriptId) {
 
     return {
         practiceCharacters: normalizePracticeCharacters(saved),
+        practiceScenes: normalizePracticeScenes(saved),
     };
 }
 
@@ -87,6 +103,9 @@ function saveScriptSettings(scriptId, settings) {
 
     data.byScriptId[String(scriptId)] = {
         practiceCharacters: settings.practiceCharacters ?? current.practiceCharacters,
+        practiceScenes: settings.practiceScenes !== undefined
+            ? settings.practiceScenes
+            : current.practiceScenes,
     };
     saveScriptSettingsData(data);
 

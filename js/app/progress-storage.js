@@ -75,12 +75,16 @@ function recordLineProgress(scriptId, character, lineId, toolName) {
     };
 }
 
-function getScriptMasteryPercent(script, practiceCharacters) {
+function getScriptMasteryPercent(script, practiceCharacters, practiceScenes) {
     if (!script || !Array.isArray(practiceCharacters) || practiceCharacters.length === 0) {
         return 0;
     }
 
-    const queue = buildPracticeQueue(script, practiceCharacters);
+    if (Array.isArray(practiceScenes) && practiceScenes.length === 0) {
+        return 0;
+    }
+
+    const queue = buildPracticeQueue(script, practiceCharacters, practiceScenes);
 
     if (queue.length === 0) {
         return 0;
