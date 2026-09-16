@@ -1,0 +1,33 @@
+{
+  "activeScriptId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "scripts": [
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "schemaVersion": 1,
+      "type": "play",
+      "title": "Hamlet",
+      "notes": "Optional production notes.",
+      "acts": [
+        {
+          "title": "Act I",
+          "scenes": [
+            {
+              "title": "Scene 1",
+              "lines": [
+                {
+                  "type": "direction",
+                  "text": "Enter HAMLET."
+                },
+                {
+                  "type": "line",
+                  "character": "Hamlet",
+                  "text": "To be, or not to be."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -32,7 +32,7 @@ function renderPracticeSettings() {
 
     const characterRow = createSettingsRow({
         label: "Practice characters",
-        hint: "Roles to include when using Read, Recite, and Recall. Applies to the active script.",
+        hint: "Roles to include when practicing. Click to select or deselect. Multiple roles can be selected.",
         control: createCharacterPillGroup({
             characters,
             selected: settings.practiceCharacters,
