@@ -60,6 +60,7 @@ function renderReadStep() {
 
     renderPracticeCue(readShell.cueSection, item.cue);
     readShell.contentSection.replaceChildren();
+    readShell.contentSection.classList.toggle(readState.revealed);
     renderReadLineSection(readShell.contentSection, item.line);
     readShell.updateNav(readState.index, readState.queue.length);
 }

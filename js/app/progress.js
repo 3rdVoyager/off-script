@@ -316,7 +316,7 @@ function createPracticeCallToAction() {
     card.className = "card progress-cta-card";
 
     const text = document.createElement("p");
-    text.textContent = "Start with Read to reveal lines, then use Recite to type them from memory.";
+    text.textContent = "Start with Read, move to Recite, then use Recall to type each line from memory.";
     card.appendChild(text);
 
     const actions = document.createElement("div");
@@ -333,6 +333,12 @@ function createPracticeCallToAction() {
     reciteLink.className = "button-secondary";
     reciteLink.textContent = "Start Recite";
     actions.appendChild(reciteLink);
+
+    const recallLink = document.createElement("a");
+    recallLink.href = "/app/practice/recall/";
+    recallLink.className = "button-secondary";
+    recallLink.textContent = "Start Recall";
+    actions.appendChild(recallLink);
 
     card.appendChild(actions);
     section.appendChild(card);

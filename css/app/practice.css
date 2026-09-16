@@ -94,8 +94,38 @@
     color: var(--color-accent);
 }
 
+.practice-check-button {
+    align-self: flex-start;
+    font-family: var(--body-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.practice-check-button:hover:not(:disabled) {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.practice-check-button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 .practice-line-input-wrap {
     width: 100%;
+}
+
+.practice-line-input-wrap--recall {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .practice-line-input {
@@ -111,6 +141,11 @@
     transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
+.practice-line-input--multiline {
+    min-height: 6rem;
+    resize: vertical;
+}
+
 .practice-line-input:hover:not(:disabled) {
     border-color: var(--color-accent);
     background-color: var(--color-surface-raised);
@@ -122,6 +157,9 @@
     background-color: var(--color-surface-raised);
 }
 
+textarea.practice-line-input.practice-line-input--error,
+textarea.practice-line-input.practice-line-input--error:hover:not(:disabled),
+textarea.practice-line-input.practice-line-input--error:focus,
 .practice-line-input.practice-line-input--error,
 .practice-line-input.practice-line-input--error:hover:not(:disabled),
 .practice-line-input.practice-line-input--error:focus {
@@ -130,8 +168,10 @@
 }
 
 .practice-line-input.practice-line-input--complete,
+.practice-line-input.practice-line-input--complete:hover:not(:disabled),
 .practice-line-input.practice-line-input--complete:focus {
-    border-color: var(--color-accent);
+    border-color: var(--color-success);
+    background-color: var(--color-background);
 }
 
 .practice-line-input:disabled {

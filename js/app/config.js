@@ -16,6 +16,9 @@ const PRACTICE_TOOLS = {
     },
 };
 
+// Fraction of expected words that must match (in order). Also allows high character similarity.
+const LINE_MATCH_THRESHOLD = 0.9;
+
 const DEV_CONFIG = {
     logScoring: false,
 };
