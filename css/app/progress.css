@@ -1,0 +1,125 @@
+.progress-hero {
+    margin-bottom: 0;
+}
+
+.progress-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.progress-hero-title {
+    font-family: var(--heading-font);
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.progress-hero-subtitle {
+    color: var(--color-muted);
+    max-width: 28rem;
+    margin: 0;
+}
+
+.progress-mastery-dial {
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    flex-shrink: 0;
+}
+
+.progress-mastery-dial-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--color-accent) calc(var(--mastery-percent, 0) * 1%),
+        var(--color-border) 0
+    );
+    mask: radial-gradient(farthest-side, transparent calc(100% - 0.625rem), #000 calc(100% - 0.55rem));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 0.625rem), #000 calc(100% - 0.55rem));
+}
+
+.progress-mastery-dial-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.progress-scope-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress-scope-line {
+    margin: 0;
+    color: var(--color-muted);
+}
+
+.progress-scope-line strong {
+    color: var(--color-text);
+}
+
+.progress-scope-link {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+.progress-scope-link:hover {
+    text-decoration: underline;
+}
+
+.progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 0.5rem;
+    border-radius: 999px;
+    background-color: var(--color-background);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--color-accent);
+    transition: width 0.2s ease-in-out;
+}
+
+.progress-bar-label {
+    flex-shrink: 0;
+    min-width: 2.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-cta-card p {
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+}
+
+.progress-cta-card .page-actions {
+    margin-top: 0;
+}
+
+@media (max-width: 40rem) {
+    .progress-hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

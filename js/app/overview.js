@@ -112,57 +112,20 @@ function createCharactersSection(script) {
         : [];
     const practiceCharacterSet = new Set(practiceCharacters);
 
-    const tableWrap = document.createElement("div");
-    tableWrap.className = "overview-character-table-wrap";
-
-    const table = document.createElement("table");
-    table.className = "overview-character-table";
-
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-
-    for (const label of ["Character", "Lines", "Scenes", "Acts"]) {
-        const th = document.createElement("th");
-        th.scope = "col";
-        th.textContent = label;
-        headerRow.appendChild(th);
-    }
-
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-
-    for (const character of characterStats) {
-        const row = document.createElement("tr");
-
-        if (practiceCharacterSet.has(character.name)) {
-            row.classList.add("overview-character-row--practice");
-        }
-
-        const nameCell = document.createElement("th");
-        nameCell.scope = "row";
-        nameCell.textContent = character.name;
-        row.appendChild(nameCell);
-
-        const linesCell = document.createElement("td");
-        linesCell.textContent = String(character.lineCount);
-        row.appendChild(linesCell);
-
-        const scenesCell = document.createElement("td");
-        scenesCell.textContent = String(character.sceneCount);
-        row.appendChild(scenesCell);
-
-        const actsCell = document.createElement("td");
-        actsCell.textContent = String(character.actCount);
-        row.appendChild(actsCell);
-
-        tbody.appendChild(row);
-    }
-
-    table.appendChild(tbody);
-    tableWrap.appendChild(table);
-    section.appendChild(tableWrap);
+    section.appendChild(createDataTable({
+        columns: ["Character", "Lines", "Scenes", "Acts"],
+        rows: characterStats.map((character) => ({
+            label: character.name,
+            cells: [
+                character.lineCount,
+                character.sceneCount,
+                character.actCount,
+            ],
+            rowClassName: practiceCharacterSet.has(character.name)
+                ? "data-table-row--highlight"
+                : "",
+        })),
+    }));
     return section;
 }
 

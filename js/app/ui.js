@@ -38,6 +38,64 @@ function createEmptyState(message, options = {}) {
     return root;
 }
 
+function createDataTable({ columns, rows, wrapClassName = "" }) {
+    const tableWrap = document.createElement("div");
+    tableWrap.className = "data-table-wrap";
+
+    if (wrapClassName) {
+        tableWrap.classList.add(wrapClassName);
+    }
+
+    const table = document.createElement("table");
+    table.className = "data-table";
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    for (const label of columns) {
+        const th = document.createElement("th");
+        th.scope = "col";
+        th.textContent = label;
+        headerRow.appendChild(th);
+    }
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    for (const row of rows) {
+        const tableRow = document.createElement("tr");
+
+        if (row.rowClassName) {
+            tableRow.classList.add(row.rowClassName);
+        }
+
+        const labelCell = document.createElement("th");
+        labelCell.scope = "row";
+        labelCell.textContent = row.label;
+        tableRow.appendChild(labelCell);
+
+        for (const cell of row.cells) {
+            const td = document.createElement("td");
+
+            if (cell instanceof HTMLElement) {
+                td.appendChild(cell);
+            } else {
+                td.textContent = String(cell);
+            }
+
+            tableRow.appendChild(td);
+        }
+
+        tbody.appendChild(tableRow);
+    }
+
+    table.appendChild(tbody);
+    tableWrap.appendChild(table);
+    return tableWrap;
+}
+
 function updateInterface() {
     if (typeof updateSidebarScriptTitle === "function") {
         updateSidebarScriptTitle();
@@ -53,6 +111,10 @@ function updateInterface() {
 
     if (document.querySelector("[data-script-list]") && typeof renderScriptList === "function") {
         renderScriptList();
+    }
+
+    if (document.querySelector("[data-progress-root]") && typeof renderProgress === "function") {
+        renderProgress();
     }
 }
 
