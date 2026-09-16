@@ -5,7 +5,7 @@ const readState = {
     index: 0,
     revealed: false,
     script: null,
-    practiceCharacter: "",
+    practiceCharacters: [],
 };
 
 let readShell = null;
@@ -55,7 +55,8 @@ function renderReadStep() {
     readShell.meta.textContent = formatPracticeMeta(
         item,
         readState.index,
-        readState.queue.length
+        readState.queue.length,
+        readState.practiceCharacters
     );
 
     renderPracticeCue(readShell.cueSection, item.cue);
@@ -106,13 +107,13 @@ function revealCurrentLine() {
 
     const result = recordLineProgress(
         readState.script.id,
-        readState.practiceCharacter,
+        item.line.character,
         item.line.lineId,
         "read"
     );
 
-    if (result.ok && typeof updateSidebarMasteryDial === "function") {
-        updateSidebarMasteryDial();
+    if (result.ok) {
+        updateInterface();
     }
 
     renderReadStep();

@@ -107,9 +107,10 @@ function createCharactersSection(script) {
         return section;
     }
 
-    const practiceCharacter = typeof getScriptSettings === "function"
-        ? getScriptSettings(script.id).practiceCharacter
-        : "";
+    const practiceCharacters = typeof getScriptSettings === "function"
+        ? getScriptSettings(script.id).practiceCharacters
+        : [];
+    const practiceCharacterSet = new Set(practiceCharacters);
 
     const tableWrap = document.createElement("div");
     tableWrap.className = "overview-character-table-wrap";
@@ -135,7 +136,7 @@ function createCharactersSection(script) {
     for (const character of characterStats) {
         const row = document.createElement("tr");
 
-        if (practiceCharacter && character.name === practiceCharacter) {
+        if (practiceCharacterSet.has(character.name)) {
             row.classList.add("overview-character-row--practice");
         }
 

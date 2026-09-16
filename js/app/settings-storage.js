@@ -4,9 +4,26 @@ const SCRIPT_SETTINGS_KEY = "offscript-script-settings";
 const DEFAULT_GLOBAL_SETTINGS = {};
 
 const DEFAULT_SCRIPT_SETTINGS = {
-    practiceCharacter: "",
-    showStageDirections: true,
+    practiceCharacters: [],
 };
+
+function normalizePracticeCharacters(saved) {
+    if (!saved || typeof saved !== "object") {
+        return [];
+    }
+
+    if (Array.isArray(saved.practiceCharacters)) {
+        return saved.practiceCharacters.filter(
+            (character) => typeof character === "string" && character.trim()
+        );
+    }
+
+    if (typeof saved.practiceCharacter === "string" && saved.practiceCharacter.trim()) {
+        return [saved.practiceCharacter.trim()];
+    }
+
+    return [];
+}
 
 function getGlobalSettings() {
     const data = readJson(GLOBAL_SETTINGS_KEY, null);
@@ -55,13 +72,8 @@ function getScriptSettings(scriptId) {
     const data = getScriptSettingsData();
     const saved = data.byScriptId[String(scriptId)];
 
-    if (!saved || typeof saved !== "object") {
-        return { ...DEFAULT_SCRIPT_SETTINGS };
-    }
-
     return {
-        ...DEFAULT_SCRIPT_SETTINGS,
-        ...saved,
+        practiceCharacters: normalizePracticeCharacters(saved),
     };
 }
 
@@ -74,9 +86,7 @@ function saveScriptSettings(scriptId, settings) {
     const current = getScriptSettings(scriptId);
 
     data.byScriptId[String(scriptId)] = {
-        ...DEFAULT_SCRIPT_SETTINGS,
-        ...current,
-        ...settings,
+        practiceCharacters: settings.practiceCharacters ?? current.practiceCharacters,
     };
     saveScriptSettingsData(data);
 

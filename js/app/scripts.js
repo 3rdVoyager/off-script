@@ -35,8 +35,7 @@ if (scriptList) {
                 deleteScriptProgress(scriptId);
             }
 
-            renderScriptList();
-            updateSidebarScriptTitle();
+            updateInterface();
             return;
         }
 
@@ -59,8 +58,7 @@ if (scriptList) {
             return;
         }
 
-        renderScriptList();
-        updateSidebarScriptTitle();
+        updateInterface();
         showFeedback(`"${result.script.title}" is now active.`, "success");
     });
 }

@@ -19,14 +19,13 @@ function getSidebarMasteryDisplay() {
 
     const settings = getScriptSettings(activeScript.id);
 
-    if (!settings.practiceCharacter) {
+    if (settings.practiceCharacters.length === 0) {
         return { percent: 0, label: "—" };
     }
 
     const percent = getScriptMasteryPercent(
         activeScript,
-        settings.practiceCharacter,
-        settings.showStageDirections
+        settings.practiceCharacters
     );
 
     return { percent, label: `${percent}%` };
@@ -144,7 +143,7 @@ function setActiveNavLink() {
 }
 
 setActiveNavLink();
-updateSidebarScriptTitle();
+updateInterface();
 
 const toggleButton = document.querySelector(".sidebar-toggle");
 const toggleIcon = toggleButton.querySelector(".material-icons");

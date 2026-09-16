@@ -32,34 +32,29 @@ function flattenScriptLines(script) {
     return lines;
 }
 
-function getCueLine(lines, lineIndex, showStageDirections) {
+function getCueLine(lines, lineIndex) {
     for (let index = lineIndex - 1; index >= 0; index--) {
-        const line = lines[index];
-
-        if (line.type === "direction" && !showStageDirections) {
-            continue;
-        }
-
-        return line;
+        return lines[index];
     }
 
     return null;
 }
 
-function buildPracticeQueue(script, practiceCharacter, showStageDirections) {
+function buildPracticeQueue(script, practiceCharacters) {
     const allLines = flattenScriptLines(script);
+    const characterSet = new Set(practiceCharacters);
     const items = [];
 
     for (let index = 0; index < allLines.length; index++) {
         const line = allLines[index];
 
-        if (line.type !== "line" || line.character !== practiceCharacter) {
+        if (line.type !== "line" || !characterSet.has(line.character)) {
             continue;
         }
 
         items.push({
             line,
-            cue: getCueLine(allLines, index, showStageDirections),
+            cue: getCueLine(allLines, index),
         });
     }
 

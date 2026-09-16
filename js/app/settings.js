@@ -31,46 +31,38 @@ function renderPracticeSettings() {
     const characters = getScriptCharacters(script);
 
     const characterRow = createSettingsRow({
-        id: "practice-character",
-        label: "Practice character",
-        hint: "Your role when using Read, Recite, and Recall. Applies to the active script.",
-        control: createSelectControl({
-            id: "practice-character",
-            value: settings.practiceCharacter,
-            options: [
-                { value: "", label: "Not set" },
-                ...characters.map((character) => ({
-                    value: character,
-                    label: character,
-                })),
-            ],
+        label: "Practice characters",
+        hint: "Roles to include when using Read, Recite, and Recall. Applies to the active script.",
+        control: createCharacterPillGroup({
+            characters,
+            selected: settings.practiceCharacters,
         }),
-    });
-
-    const stageDirectionsRow = createSettingsRow({
-        id: "show-stage-directions",
-        label: "Show stage directions",
-        hint: "Include stage directions during practice tools.",
-        control: createToggleControl({
-            id: "show-stage-directions",
-            checked: settings.showStageDirections,
-        }),
+        controlVariant: "pills",
     });
 
     practiceSettingsRoot.appendChild(characterRow);
-    practiceSettingsRoot.appendChild(stageDirectionsRow);
 
-    characterRow.querySelector("select").addEventListener("change", (event) => {
-        saveScriptSettings(script.id, {
-            practiceCharacter: event.target.value,
-        });
-        showFeedback("Practice settings saved.");
-    });
+    const pillGroup = characterRow.querySelector("[data-practice-characters]");
 
-    stageDirectionsRow.querySelector("input").addEventListener("change", (event) => {
+    pillGroup.addEventListener("click", (event) => {
+        const pill = event.target.closest("[data-character-pill]");
+
+        if (!pill) {
+            return;
+        }
+
+        const character = pill.getAttribute("data-character-pill");
+        const isSelected = pill.classList.toggle("settings-pill--selected");
+        pill.setAttribute("aria-pressed", isSelected ? "true" : "false");
+
+        const selected = Array.from(
+            pillGroup.querySelectorAll(".settings-pill--selected")
+        ).map((button) => button.getAttribute("data-character-pill"));
+
         saveScriptSettings(script.id, {
-            showStageDirections: event.target.checked,
+            practiceCharacters: selected,
         });
+        updateInterface();
         showFeedback("Practice settings saved.");
     });
 }
@@ -85,16 +77,19 @@ function renderAppSettings() {
     appSettingsRoot.appendChild(createEmptyState("No app settings yet.", { variant: "minimal" }));
 }
 
-function createSettingsRow({ id, label, hint, control }) {
+function createSettingsRow({ label, hint, control, controlVariant }) {
     const row = document.createElement("div");
     row.className = "settings-row";
+
+    if (controlVariant === "pills") {
+        row.classList.add("settings-row--pills");
+    }
 
     const info = document.createElement("div");
     info.className = "settings-row-info";
 
-    const labelElement = document.createElement("label");
+    const labelElement = document.createElement("p");
     labelElement.className = "settings-row-label";
-    labelElement.setAttribute("for", id);
     labelElement.textContent = label;
     info.appendChild(labelElement);
 
@@ -107,6 +102,11 @@ function createSettingsRow({ id, label, hint, control }) {
 
     const controlWrap = document.createElement("div");
     controlWrap.className = "settings-row-control";
+
+    if (controlVariant === "pills") {
+        controlWrap.classList.add("settings-row-control--pills");
+    }
+
     controlWrap.appendChild(control);
 
     row.appendChild(info);
@@ -114,33 +114,40 @@ function createSettingsRow({ id, label, hint, control }) {
     return row;
 }
 
-function createSelectControl({ id, value, options }) {
-    const select = document.createElement("select");
-    select.id = id;
-    select.className = "settings-control settings-control--select";
+function createCharacterPillGroup({ characters, selected }) {
+    const selectedSet = new Set(selected);
+    const group = document.createElement("div");
+    group.className = "settings-pill-group";
+    group.setAttribute("data-practice-characters", "");
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", "Practice characters");
 
-    for (const option of options) {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.value;
-        optionElement.textContent = option.label;
-
-        if (option.value === value) {
-            optionElement.selected = true;
-        }
-
-        select.appendChild(optionElement);
+    if (characters.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "settings-pill-empty";
+        empty.textContent = "No characters in this script yet.";
+        group.appendChild(empty);
+        return group;
     }
 
-    return select;
-}
+    for (const character of characters) {
+        const pill = document.createElement("button");
+        pill.type = "button";
+        pill.className = "settings-pill";
+        pill.setAttribute("data-character-pill", character);
+        pill.textContent = character;
 
-function createToggleControl({ id, checked }) {
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.id = id;
-    input.className = "settings-control settings-control--toggle";
-    input.checked = checked;
-    return input;
+        const isSelected = selectedSet.has(character);
+
+        if (isSelected) {
+            pill.classList.add("settings-pill--selected");
+        }
+
+        pill.setAttribute("aria-pressed", isSelected ? "true" : "false");
+        group.appendChild(pill);
+    }
+
+    return group;
 }
 
 function getScriptCharacters(script) {

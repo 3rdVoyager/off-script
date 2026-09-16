@@ -51,6 +51,5 @@ addScriptForm.addEventListener("submit", async (event) => {
         fileNameDisplay.textContent = "";
     }
 
-    renderScriptList();
-    updateSidebarScriptTitle();
+    updateInterface();
 });

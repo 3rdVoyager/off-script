@@ -75,12 +75,12 @@ function recordLineProgress(scriptId, character, lineId, toolName) {
     };
 }
 
-function getScriptMasteryPercent(script, practiceCharacter, showStageDirections) {
-    if (!script || !practiceCharacter) {
+function getScriptMasteryPercent(script, practiceCharacters) {
+    if (!script || !Array.isArray(practiceCharacters) || practiceCharacters.length === 0) {
         return 0;
     }
 
-    const queue = buildPracticeQueue(script, practiceCharacter, showStageDirections);
+    const queue = buildPracticeQueue(script, practiceCharacters);
 
     if (queue.length === 0) {
         return 0;
@@ -89,7 +89,7 @@ function getScriptMasteryPercent(script, practiceCharacter, showStageDirections)
     let total = 0;
 
     for (const item of queue) {
-        total += getLineMastery(script.id, practiceCharacter, item.line.lineId);
+        total += getLineMastery(script.id, item.line.character, item.line.lineId);
     }
 
     return Math.round((total / queue.length) * 100);

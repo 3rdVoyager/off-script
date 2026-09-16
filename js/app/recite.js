@@ -5,7 +5,7 @@ const reciteState = {
     index: 0,
     completed: false,
     script: null,
-    practiceCharacter: "",
+    practiceCharacters: [],
 };
 
 let reciteShell = null;
@@ -59,7 +59,8 @@ function renderReciteStep() {
     reciteShell.meta.textContent = formatPracticeMeta(
         item,
         reciteState.index,
-        reciteState.queue.length
+        reciteState.queue.length,
+        reciteState.practiceCharacters
     );
 
     renderPracticeCue(reciteShell.cueSection, item.cue);
@@ -103,13 +104,13 @@ function handleReciteLineComplete() {
 
     const result = recordLineProgress(
         reciteState.script.id,
-        reciteState.practiceCharacter,
+        item.line.character,
         item.line.lineId,
         "recite"
     );
 
-    if (result.ok && typeof updateSidebarMasteryDial === "function") {
-        updateSidebarMasteryDial();
+    if (result.ok) {
+        updateInterface();
     }
 }
 

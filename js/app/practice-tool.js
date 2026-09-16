@@ -6,23 +6,18 @@ function loadPracticeSession(state) {
     }
 
     const settings = getScriptSettings(script.id);
+    const practiceCharacters = settings.practiceCharacters;
 
-    if (!settings.practiceCharacter) {
+    if (practiceCharacters.length === 0) {
         return { ok: false, element: createPracticeEmptyState("no-character") };
     }
 
-    const queue = buildPracticeQueue(
-        script,
-        settings.practiceCharacter,
-        settings.showStageDirections
-    );
+    const queue = buildPracticeQueue(script, practiceCharacters);
 
     if (queue.length === 0) {
         return {
             ok: false,
-            element: createPracticeEmptyState("no-lines", {
-                character: settings.practiceCharacter,
-            }),
+            element: createPracticeEmptyState("no-lines"),
         };
     }
 
@@ -32,14 +27,14 @@ function loadPracticeSession(state) {
 
     state.script = script;
     state.queue = queue;
-    state.practiceCharacter = settings.practiceCharacter;
+    state.practiceCharacters = practiceCharacters;
     state.index = Math.min(state.index ?? 0, queue.length - 1);
 
     return {
         ok: true,
         queue,
         script,
-        practiceCharacter: settings.practiceCharacter,
+        practiceCharacters,
     };
 }
 
@@ -47,8 +42,16 @@ function getPracticeItem(queue, index) {
     return queue[index] ?? null;
 }
 
-function formatPracticeMeta(item, index, total) {
-    return `${item.line.actTitle} · ${item.line.sceneTitle} · Line ${index + 1} of ${total}`;
+function formatPracticeMeta(item, index, total, practiceCharacters = []) {
+    const parts = [];
+
+    if (practiceCharacters.length > 1) {
+        parts.push(item.line.character);
+    }
+
+    parts.push(item.line.actTitle, item.line.sceneTitle, `Line ${index + 1} of ${total}`);
+
+    return parts.join(" · ");
 }
 
 function renderPracticeCue(cueSection, cue) {

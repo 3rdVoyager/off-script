@@ -38,6 +38,26 @@ function createEmptyState(message, options = {}) {
     return root;
 }
 
+function updateInterface() {
+    if (typeof updateSidebarScriptTitle === "function") {
+        updateSidebarScriptTitle();
+    } else if (typeof updateSidebarMasteryDial === "function") {
+        updateSidebarMasteryDial();
+    }
+
+    // Practice tools keep their own session state; only refresh passive pages here.
+    const pageUpdaters = [
+        { root: "[data-overview-root]", render: renderOverview },
+        { root: "[data-script-list]", render: renderScriptList },
+    ];
+
+    for (const { root, render } of pageUpdaters) {
+        if (document.querySelector(root) && typeof render === "function") {
+            render();
+        }
+    }
+}
+
 function createPracticeEmptyState(reason, options = {}) {
     const states = {
         "no-script": {
@@ -45,11 +65,11 @@ function createPracticeEmptyState(reason, options = {}) {
             action: { label: "Manage Scripts", href: "/app/scripts/" },
         },
         "no-character": {
-            message: "Choose a practice character in Settings before practicing.",
+            message: "Choose at least one practice character in Settings before practicing.",
             action: { label: "Open Settings", href: "/app/settings/" },
         },
         "no-lines": {
-            message: `No lines found for ${options.character ?? "your character"}.`,
+            message: "No lines found for your selected characters.",
             action: { label: "Open Settings", href: "/app/settings/" },
         },
     };
