@@ -122,3 +122,23 @@ function deleteScriptSettings(scriptId) {
     delete data.byScriptId[String(scriptId)];
     saveScriptSettingsData(data);
 }
+
+function getPracticeSceneSelection(practiceScenes, scenes) {
+    if (practiceScenes === null) {
+        return scenes.map((scene) => scene.id);
+    }
+
+    return practiceScenes;
+}
+
+function practiceScenesFromSelection(selectedIds, allSceneIds) {
+    if (selectedIds.length === 0) {
+        return [];
+    }
+
+    if (selectedIds.length === allSceneIds.length) {
+        return null;
+    }
+
+    return selectedIds;
+}

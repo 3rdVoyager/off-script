@@ -1,61 +1,38 @@
 const reciteApi = createPracticeApi("recite");
 
 function mountReciteTool(root) {
-    const state = {
-        queue: [],
-        index: 0,
-        completed: false,
-        script: null,
-        practiceCharacters: [],
-    };
-
-    let shell = null;
     let lineInput = null;
 
-    function renderTool() {
-        root.replaceChildren();
-        lineInput = null;
+    const session = createPracticeLineSession(root, reciteApi, {
+        createState: () => ({
+            queue: [],
+            index: 0,
+            completed: false,
+            script: null,
+            practiceCharacters: [],
+        }),
+        onResetStep: (state) => {
+            state.completed = false;
+        },
+        renderStep: ({ shell, state, api }) => {
+            const item = api.getCurrentItem(state);
 
-        const session = reciteApi.loadSession(state);
+            if (!item) {
+                return;
+            }
 
-        if (!session.ok) {
-            root.appendChild(session.element);
-            shell = null;
-            return;
-        }
+            state.completed = false;
+            lineInput = null;
 
-        state.completed = false;
+            shell.meta.textContent = api.formatMeta(item, state.index, state.queue.length);
+            api.renderCue(shell.cueSection, item.cue);
+            shell.contentSection.replaceChildren();
+            renderInputSection(shell.contentSection, item.line, state, api, session);
+            shell.updateNav(state.index, state.queue.length);
+        },
+    });
 
-        shell = reciteApi.createShell({
-            onPrev: () => moveIndex(-1),
-            onNext: () => moveIndex(1),
-        });
-
-        root.appendChild(shell.element);
-        renderStep();
-    }
-
-    function renderStep() {
-        if (!shell) {
-            return;
-        }
-
-        const item = reciteApi.getCurrentItem(state);
-
-        if (!item) {
-            return;
-        }
-
-        state.completed = false;
-
-        shell.meta.textContent = reciteApi.formatMeta(item, state.index, state.queue.length);
-        reciteApi.renderCue(shell.cueSection, item.cue);
-        shell.contentSection.replaceChildren();
-        renderInputSection(shell.contentSection, item.line);
-        shell.updateNav(state.index, state.queue.length);
-    }
-
-    function renderInputSection(contentSection, line) {
+    function renderInputSection(contentSection, line, state, api, sessionRef) {
         const label = document.createElement("p");
         label.className = "practice-section-label";
         label.textContent = "Type your line";
@@ -66,58 +43,157 @@ function mountReciteTool(root) {
         hint.textContent = "Type the first letter of each word to fill it in.";
         contentSection.appendChild(hint);
 
-        lineInput = createFirstLetterLineInput(line.text, {
-            onComplete: handleLineComplete,
-            onEnterWhenComplete: () => moveIndex(1),
+        lineInput = createReciteFirstLetterInput(line.text, {
+            onComplete: () => {
+                if (state.completed) {
+                    return;
+                }
+
+                const item = api.getCurrentItem(state);
+
+                if (!item || !state.script) {
+                    return;
+                }
+
+                state.completed = true;
+                api.recordSuccess(state, item);
+            },
+            onEnterWhenComplete: () => sessionRef.moveIndex(1),
         });
 
         contentSection.appendChild(lineInput.element);
         lineInput.focus();
     }
+}
 
-    function handleLineComplete() {
-        if (state.completed) {
-            return;
-        }
+function normalizeReciteLine(text) {
+    return text
+        .toLowerCase()
+        .replace(/[^\w\s]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
 
-        const item = reciteApi.getCurrentItem(state);
+function splitReciteLineIntoWords(text) {
+    return normalizeReciteLine(text).split(" ").filter(Boolean);
+}
 
-        if (!item || !state.script) {
-            return;
-        }
+function createReciteFirstLetterInput(targetLine, options = {}) {
+    const words = splitReciteLineIntoWords(targetLine);
+    const { onComplete, onEnterWhenComplete } = options;
 
-        state.completed = true;
-        reciteApi.recordSuccess(state, item);
+    let wordIndex = 0;
+    let filledText = "";
+    let isComplete = false;
+
+    const container = document.createElement("div");
+    container.className = "practice-line-input-wrap";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "practice-line-input";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    container.appendChild(input);
+
+    function showError() {
+        input.classList.add("practice-line-input--error");
+
+        window.setTimeout(() => {
+            input.classList.remove("practice-line-input--error");
+        }, 400);
     }
 
-    function moveIndex(delta) {
-        const nextIndex = state.index + delta;
+    function finishLine() {
+        isComplete = true;
+        input.disabled = true;
+        input.classList.add("practice-line-input--complete");
 
-        if (nextIndex < 0 || nextIndex >= state.queue.length) {
-            return;
+        if (onComplete) {
+            onComplete();
         }
-
-        state.index = nextIndex;
-        state.completed = false;
-        renderStep();
     }
 
-    function handleKeydown(event) {
-        if (state.queue.length === 0 || isTypingTarget(event.target)) {
-            return;
-        }
+    function completeCurrentWord() {
+        const word = words[wordIndex];
+        const needsSpace = wordIndex < words.length - 1;
 
-        if (event.key === "ArrowLeft") {
+        filledText += word + (needsSpace ? " " : "");
+        wordIndex += 1;
+        input.value = filledText;
+
+        if (wordIndex >= words.length) {
+            finishLine();
+        }
+    }
+
+    function reset() {
+        wordIndex = 0;
+        filledText = "";
+        isComplete = false;
+        input.value = "";
+        input.disabled = false;
+        input.classList.remove("practice-line-input--error", "practice-line-input--complete");
+    }
+
+    function focus() {
+        input.focus();
+    }
+
+    if (words.length === 0) {
+        finishLine();
+    }
+
+    input.addEventListener("keydown", (event) => {
+        if (isComplete) {
+            if (event.key === "Enter" && onEnterWhenComplete) {
+                event.preventDefault();
+                onEnterWhenComplete();
+                return;
+            }
+
             event.preventDefault();
-            moveIndex(-1);
+            return;
         }
 
-        if (event.key === "ArrowRight") {
+        if (event.key === "Backspace" || event.key === "Delete") {
             event.preventDefault();
-            moveIndex(1);
+            return;
         }
-    }
 
-    document.addEventListener("keydown", handleKeydown);
-    renderTool();
+        if (event.key === " ") {
+            event.preventDefault();
+            return;
+        }
+
+        if (event.key.length !== 1) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const expectedWord = words[wordIndex];
+        const expectedChar = expectedWord[0];
+
+        if (event.key.toLowerCase() !== expectedChar.toLowerCase()) {
+            showError();
+            return;
+        }
+
+        completeCurrentWord();
+    });
+
+    input.addEventListener("input", () => {
+        if (input.value !== filledText) {
+            input.value = filledText;
+        }
+    });
+
+    return {
+        element: container,
+        input,
+        reset,
+        focus,
+        isComplete: () => isComplete,
+    };
 }

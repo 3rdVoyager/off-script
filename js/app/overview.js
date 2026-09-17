@@ -51,7 +51,7 @@ function createScriptHeader(script) {
 }
 
 function createStatsSection(script) {
-    const stats = getScriptStats(script);
+    const stats = getScriptStructureStats(script);
     const section = document.createElement("section");
     section.className = "page-section";
 
@@ -70,23 +70,6 @@ function createStatsSection(script) {
 
     section.appendChild(grid);
     return section;
-}
-
-function createStatCard(value, label) {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-
-    const valueElement = document.createElement("p");
-    valueElement.className = "stat-card-value";
-    valueElement.textContent = value;
-
-    const labelElement = document.createElement("p");
-    labelElement.className = "stat-card-label";
-    labelElement.textContent = label;
-
-    card.appendChild(valueElement);
-    card.appendChild(labelElement);
-    return card;
 }
 
 function createCharactersSection(script) {
@@ -207,30 +190,6 @@ function formatSceneMeta(scene) {
     const spokenLabel = spokenCount === 1 ? "spoken line" : "spoken lines";
 
     return `${lineCount} ${lineLabel} · ${spokenCount} ${spokenLabel}`;
-}
-
-function getScriptStats(script) {
-    let sceneCount = 0;
-    let spokenLineCount = 0;
-
-    for (const act of script.acts) {
-        sceneCount += act.scenes.length;
-
-        for (const scene of act.scenes) {
-            spokenLineCount += scene.lines.filter((line) => line.type === "line").length;
-        }
-    }
-
-    return {
-        actCount: script.acts.length,
-        sceneCount,
-        characterCount: getScriptCharacters(script).length,
-        spokenLineCount,
-    };
-}
-
-function getScriptCharacters(script) {
-    return getCharacterStatsList(script).map((character) => character.name);
 }
 
 function getCharacterStatsList(script) {

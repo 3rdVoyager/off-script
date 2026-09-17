@@ -111,26 +111,6 @@ function createProgressHero(script, summary) {
     return section;
 }
 
-function createMasteryDial(percent) {
-    const dial = document.createElement("div");
-    dial.className = "progress-mastery-dial";
-    dial.setAttribute("role", "img");
-    dial.setAttribute("aria-label", `Mastery ${percent}%`);
-    dial.style.setProperty("--mastery-percent", String(percent));
-
-    const ring = document.createElement("div");
-    ring.className = "progress-mastery-dial-ring";
-    ring.setAttribute("aria-hidden", "true");
-    dial.appendChild(ring);
-
-    const value = document.createElement("span");
-    value.className = "progress-mastery-dial-value";
-    value.textContent = `${percent}%`;
-    dial.appendChild(value);
-
-    return dial;
-}
-
 function createProgressSummarySection(summary) {
     const section = document.createElement("section");
     section.className = "page-section";
@@ -191,20 +171,6 @@ function createPracticeScopeSection(script, settings) {
 
     section.appendChild(card);
     return section;
-}
-
-function formatPracticeScenesLabel(script, practiceScenes) {
-    const allScenes = getScriptScenes(script);
-
-    if (practiceScenes === null || practiceScenes.length === allScenes.length) {
-        return `All scenes (${allScenes.length})`;
-    }
-
-    const sceneLabels = allScenes
-        .filter((scene) => practiceScenes.includes(scene.id))
-        .map((scene) => scene.label);
-
-    return sceneLabels.join(" · ");
 }
 
 function createCharacterProgressSection(script, settings) {
@@ -269,49 +235,6 @@ function createSceneProgressSection(script, settings) {
     return section;
 }
 
-function createProgressBar(percent) {
-    const wrap = document.createElement("div");
-    wrap.className = "progress-bar-wrap";
-
-    const bar = document.createElement("div");
-    bar.className = "progress-bar";
-    bar.setAttribute("role", "progressbar");
-    bar.setAttribute("aria-valuemin", "0");
-    bar.setAttribute("aria-valuemax", "100");
-    bar.setAttribute("aria-valuenow", String(percent));
-    bar.setAttribute("aria-label", `${percent}% mastery`);
-
-    const fill = document.createElement("div");
-    fill.className = "progress-bar-fill";
-    fill.style.width = `${percent}%`;
-    bar.appendChild(fill);
-
-    const label = document.createElement("span");
-    label.className = "progress-bar-label";
-    label.textContent = `${percent}%`;
-
-    wrap.appendChild(bar);
-    wrap.appendChild(label);
-    return wrap;
-}
-
-function createStatCard(value, label) {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-
-    const valueElement = document.createElement("p");
-    valueElement.className = "stat-card-value";
-    valueElement.textContent = value;
-
-    const labelElement = document.createElement("p");
-    labelElement.className = "stat-card-label";
-    labelElement.textContent = label;
-
-    card.appendChild(valueElement);
-    card.appendChild(labelElement);
-    return card;
-}
-
 function createPracticeCallToAction() {
     const section = document.createElement("section");
     section.className = "page-section progress-cta";
@@ -323,47 +246,8 @@ function createPracticeCallToAction() {
     text.textContent = "Start with Read, move to Recite, then use Recall to type each line from memory.";
     card.appendChild(text);
 
-    const actions = document.createElement("div");
-    actions.className = "page-actions";
-
-    const readLink = document.createElement("a");
-    readLink.href = "/app/practice/?tool=read";
-    readLink.className = "button-primary";
-    readLink.textContent = "Start Read";
-    actions.appendChild(readLink);
-
-    const reciteLink = document.createElement("a");
-    reciteLink.href = "/app/practice/?tool=recite";
-    reciteLink.className = "button-secondary";
-    reciteLink.textContent = "Start Recite";
-    actions.appendChild(reciteLink);
-
-    const recallLink = document.createElement("a");
-    recallLink.href = "/app/practice/?tool=recall";
-    recallLink.className = "button-secondary";
-    recallLink.textContent = "Start Recall";
-    actions.appendChild(recallLink);
-
-    card.appendChild(actions);
+    card.appendChild(createPracticeToolActions({ primaryToolId: "read", primaryLabelPrefix: "Start" }));
     section.appendChild(card);
     return section;
 }
 
-function getScriptScenes(script) {
-    const scenes = [];
-
-    for (let actIndex = 0; actIndex < script.acts.length; actIndex++) {
-        const act = script.acts[actIndex];
-
-        for (let sceneIndex = 0; sceneIndex < act.scenes.length; sceneIndex++) {
-            const scene = act.scenes[sceneIndex];
-
-            scenes.push({
-                id: createSceneId(actIndex, sceneIndex),
-                label: `${act.title} · ${scene.title}`,
-            });
-        }
-    }
-
-    return scenes;
-}

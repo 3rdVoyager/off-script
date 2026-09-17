@@ -103,3 +103,85 @@ function createPracticeToolShell({ onPrev, onNext }) {
 function isTypingTarget(target) {
     return target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
 }
+
+function bindPracticeArrowKeys(state, moveIndex, onKeydownExtra) {
+    document.addEventListener("keydown", (event) => {
+        if (state.queue.length === 0 || isTypingTarget(event.target)) {
+            return;
+        }
+
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            moveIndex(-1);
+            return;
+        }
+
+        if (event.key === "ArrowRight") {
+            event.preventDefault();
+            moveIndex(1);
+            return;
+        }
+
+        if (onKeydownExtra) {
+            onKeydownExtra(event);
+        }
+    });
+}
+
+function createPracticeLineSession(root, api, { createState, onResetStep, renderStep, onKeydownExtra }) {
+    const state = createState();
+    let shell = null;
+
+    function moveIndex(delta) {
+        const nextIndex = state.index + delta;
+
+        if (nextIndex < 0 || nextIndex >= state.queue.length) {
+            return;
+        }
+
+        state.index = nextIndex;
+        onResetStep(state);
+        renderCurrentStep();
+    }
+
+    function renderTool() {
+        root.replaceChildren();
+        shell = null;
+
+        const session = api.loadSession(state);
+
+        if (!session.ok) {
+            root.appendChild(session.element);
+            return;
+        }
+
+        onResetStep(state);
+
+        shell = api.createShell({
+            onPrev: () => moveIndex(-1),
+            onNext: () => moveIndex(1),
+        });
+
+        root.appendChild(shell.element);
+        renderCurrentStep();
+    }
+
+    function renderCurrentStep() {
+        if (!shell) {
+            return;
+        }
+
+        renderStep({ shell, state, api });
+    }
+
+    bindPracticeArrowKeys(state, moveIndex, onKeydownExtra);
+    renderTool();
+
+    return {
+        state,
+        shell: () => shell,
+        renderTool,
+        moveIndex,
+        renderStep: renderCurrentStep,
+    };
+}

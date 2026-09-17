@@ -291,7 +291,7 @@ function createDashboardStatsSection(script, summary, scriptCount) {
             "Lines started"
         ));
     } else {
-        const stats = getScriptStats(script);
+        const stats = getScriptStructureStats(script);
 
         grid.appendChild(createStatCard(String(stats.actCount), stats.actCount === 1 ? "Act" : "Acts"));
         grid.appendChild(createStatCard(String(stats.sceneCount), stats.sceneCount === 1 ? "Scene" : "Scenes"));
@@ -407,58 +407,3 @@ function createQuickLinkCard({ href, label, icon, description }) {
     return link;
 }
 
-function createMasteryDial(percent) {
-    const dial = document.createElement("div");
-    dial.className = "progress-mastery-dial";
-    dial.setAttribute("role", "img");
-    dial.setAttribute("aria-label", `Mastery ${percent}%`);
-    dial.style.setProperty("--mastery-percent", String(percent));
-
-    const ring = document.createElement("div");
-    ring.className = "progress-mastery-dial-ring";
-    ring.setAttribute("aria-hidden", "true");
-    dial.appendChild(ring);
-
-    const value = document.createElement("span");
-    value.className = "progress-mastery-dial-value";
-    value.textContent = `${percent}%`;
-    dial.appendChild(value);
-
-    return dial;
-}
-
-function createStatCard(value, label) {
-    const card = document.createElement("article");
-    card.className = "stat-card";
-
-    const valueElement = document.createElement("p");
-    valueElement.className = "stat-card-value";
-    valueElement.textContent = value;
-
-    const labelElement = document.createElement("p");
-    labelElement.className = "stat-card-label";
-    labelElement.textContent = label;
-
-    card.appendChild(valueElement);
-    card.appendChild(labelElement);
-    return card;
-}
-
-function getScriptStats(script) {
-    let sceneCount = 0;
-    let spokenLineCount = 0;
-
-    for (const act of script.acts) {
-        sceneCount += act.scenes.length;
-
-        for (const scene of act.scenes) {
-            spokenLineCount += scene.lines.filter((line) => line.type === "line").length;
-        }
-    }
-
-    return {
-        actCount: script.acts.length,
-        sceneCount,
-        spokenLineCount,
-    };
-}

@@ -1,58 +1,42 @@
 const readApi = createPracticeApi("read");
 
 function mountReadTool(root) {
-    const state = {
-        queue: [],
-        index: 0,
-        revealed: false,
-        script: null,
-        practiceCharacters: [],
-    };
+    const session = createPracticeLineSession(root, readApi, {
+        createState: () => ({
+            queue: [],
+            index: 0,
+            revealed: false,
+            script: null,
+            practiceCharacters: [],
+        }),
+        onResetStep: (state) => {
+            state.revealed = false;
+        },
+        renderStep: ({ shell, state, api }) => {
+            const item = api.getCurrentItem(state);
 
-    let shell = null;
+            if (!item) {
+                return;
+            }
 
-    function renderTool() {
-        root.replaceChildren();
+            shell.meta.textContent = api.formatMeta(item, state.index, state.queue.length);
+            api.renderCue(shell.cueSection, item.cue);
+            shell.contentSection.replaceChildren();
+            shell.contentSection.classList.toggle("practice-content--correct", state.revealed);
+            renderLineSection(shell.contentSection, item.line, state, api);
+            shell.updateNav(state.index, state.queue.length);
+        },
+        onKeydownExtra: (event) => {
+            if (event.key === " " || event.key === "Enter") {
+                if (!session.state.revealed) {
+                    event.preventDefault();
+                    revealCurrentLine(session.state, session.renderStep, readApi);
+                }
+            }
+        },
+    });
 
-        const session = readApi.loadSession(state);
-
-        if (!session.ok) {
-            root.appendChild(session.element);
-            shell = null;
-            return;
-        }
-
-        state.revealed = false;
-
-        shell = readApi.createShell({
-            onPrev: () => moveIndex(-1),
-            onNext: () => moveIndex(1),
-        });
-
-        root.appendChild(shell.element);
-        renderStep();
-    }
-
-    function renderStep() {
-        if (!shell) {
-            return;
-        }
-
-        const item = readApi.getCurrentItem(state);
-
-        if (!item) {
-            return;
-        }
-
-        shell.meta.textContent = readApi.formatMeta(item, state.index, state.queue.length);
-        readApi.renderCue(shell.cueSection, item.cue);
-        shell.contentSection.replaceChildren();
-        shell.contentSection.classList.toggle("practice-content--correct", state.revealed);
-        renderLineSection(shell.contentSection, item.line);
-        shell.updateNav(state.index, state.queue.length);
-    }
-
-    function renderLineSection(contentSection, line) {
+    function renderLineSection(contentSection, line, state, api) {
         const label = document.createElement("p");
         label.className = "practice-section-label";
         label.textContent = "Your line";
@@ -75,61 +59,25 @@ function mountReadTool(root) {
         revealButton.type = "button";
         revealButton.className = "practice-reveal-button";
         revealButton.textContent = "Show line";
-        revealButton.addEventListener("click", revealCurrentLine);
+        revealButton.addEventListener("click", () => {
+            revealCurrentLine(state, session.renderStep, api);
+        });
         contentSection.appendChild(revealButton);
     }
+}
 
-    function revealCurrentLine() {
-        if (state.revealed) {
-            return;
-        }
-
-        const item = readApi.getCurrentItem(state);
-
-        if (!item || !state.script) {
-            return;
-        }
-
-        state.revealed = true;
-        readApi.recordSuccess(state, item);
-        renderStep();
+function revealCurrentLine(state, renderStep, api) {
+    if (state.revealed) {
+        return;
     }
 
-    function moveIndex(delta) {
-        const nextIndex = state.index + delta;
+    const item = api.getCurrentItem(state);
 
-        if (nextIndex < 0 || nextIndex >= state.queue.length) {
-            return;
-        }
-
-        state.index = nextIndex;
-        state.revealed = false;
-        renderStep();
+    if (!item || !state.script) {
+        return;
     }
 
-    function handleKeydown(event) {
-        if (state.queue.length === 0 || isTypingTarget(event.target)) {
-            return;
-        }
-
-        if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            moveIndex(-1);
-        }
-
-        if (event.key === "ArrowRight") {
-            event.preventDefault();
-            moveIndex(1);
-        }
-
-        if (event.key === " " || event.key === "Enter") {
-            if (!state.revealed) {
-                event.preventDefault();
-                revealCurrentLine();
-            }
-        }
-    }
-
-    document.addEventListener("keydown", handleKeydown);
-    renderTool();
+    state.revealed = true;
+    api.recordSuccess(state, item);
+    renderStep();
 }
