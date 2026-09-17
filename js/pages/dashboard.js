@@ -11,15 +11,10 @@ function renderDashboard() {
 
     dashboardRoot.replaceChildren();
 
-    if (typeof syncOnboardingFromAppState === "function") {
-        syncOnboardingFromAppState();
-    }
-
     const scriptsData = getScriptsData();
     const script = getActiveScript();
 
     if (scriptsData.scripts.length === 0) {
-        dashboardRoot.appendChild(createGettingStartedSection());
         dashboardRoot.appendChild(createWelcomeSection());
         return;
     }
@@ -51,137 +46,10 @@ function renderDashboard() {
         );
     }
 
-    dashboardRoot.appendChild(createGettingStartedSection());
     dashboardRoot.appendChild(createDashboardHero(script, summary, hasPracticeSetup));
     dashboardRoot.appendChild(createDashboardStatsSection(script, summary, scriptsData.scripts.length));
     dashboardRoot.appendChild(createPracticeToolsSection());
     dashboardRoot.appendChild(createQuickLinksSection());
-}
-
-function createGettingStartedSection() {
-    const status = getGettingStartedStatus();
-
-    if (status.collapsed) {
-        return createGettingStartedCollapsedBar(status);
-    }
-
-    return createGettingStartedExpandedSection(status);
-}
-
-function createGettingStartedCollapsedBar(status) {
-    const section = document.createElement("section");
-    section.className = "page-section getting-started getting-started--collapsed";
-
-    const bar = document.createElement("div");
-    bar.className = "getting-started-collapsed-bar";
-
-    const text = document.createElement("div");
-    text.className = "getting-started-collapsed-text";
-
-    const label = document.createElement("p");
-    label.className = "getting-started-collapsed-label";
-    label.textContent = status.allComplete ? "You're all set!" : "Getting started";
-    text.appendChild(label);
-
-    const progress = document.createElement("p");
-    progress.className = "getting-started-collapsed-progress";
-    progress.textContent = `${status.completedCount} of ${status.totalCount} complete`;
-    text.appendChild(progress);
-
-    bar.appendChild(text);
-
-    const expandButton = document.createElement("button");
-    expandButton.type = "button";
-    expandButton.className = "button-secondary getting-started-toggle";
-    expandButton.innerHTML = '<span class="material-icons" aria-hidden="true">expand_more</span><span>Expand</span>';
-    expandButton.addEventListener("click", () => {
-        setGettingStartedCollapsed(false);
-        renderDashboard();
-    });
-    bar.appendChild(expandButton);
-
-    section.appendChild(bar);
-    return section;
-}
-
-function createGettingStartedExpandedSection(status) {
-    const section = document.createElement("section");
-    section.className = "page-section getting-started";
-
-    const header = document.createElement("div");
-    header.className = "getting-started-header";
-
-    const title = document.createElement("h2");
-    title.className = "page-section-title";
-    title.textContent = status.allComplete ? "You're all set!" : "Getting started";
-    header.appendChild(title);
-
-    const collapseButton = document.createElement("button");
-    collapseButton.type = "button";
-    collapseButton.className = "button-secondary getting-started-toggle";
-    collapseButton.innerHTML = '<span class="material-icons" aria-hidden="true">expand_less</span><span>Collapse</span>';
-    collapseButton.addEventListener("click", () => {
-        setGettingStartedCollapsed(true);
-        renderDashboard();
-    });
-    header.appendChild(collapseButton);
-
-    section.appendChild(header);
-
-    if (status.allComplete) {
-        const text = document.createElement("p");
-        text.className = "getting-started-complete-text";
-        text.textContent = "You have the basics down. Keep practicing with Reveal, First Letter, and Type.";
-        section.appendChild(text);
-        return section;
-    }
-
-    const list = document.createElement("ol");
-    list.className = "getting-started-steps";
-
-    for (const step of status.steps) {
-        list.appendChild(createGettingStartedStep(step));
-    }
-
-    section.appendChild(list);
-    return section;
-}
-
-function createGettingStartedStep(step) {
-    const item = document.createElement("li");
-    item.className = step.complete
-        ? "getting-started-step getting-started-step--complete"
-        : "getting-started-step";
-
-    const icon = document.createElement("span");
-    icon.className = "material-icons getting-started-step-icon";
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = step.complete ? "check_circle" : "radio_button_unchecked";
-    item.appendChild(icon);
-
-    const content = document.createElement("div");
-    content.className = "getting-started-step-content";
-
-    if (step.complete) {
-        const label = document.createElement("p");
-        label.className = "getting-started-step-label";
-        label.textContent = step.label;
-        content.appendChild(label);
-    } else {
-        const link = document.createElement("a");
-        link.href = step.href;
-        link.className = "getting-started-step-link";
-        link.textContent = step.label;
-        content.appendChild(link);
-    }
-
-    const description = document.createElement("p");
-    description.className = "getting-started-step-description";
-    description.textContent = step.description;
-    content.appendChild(description);
-
-    item.appendChild(content);
-    return item;
 }
 
 function createWelcomeSection() {
@@ -197,7 +65,8 @@ function createWelcomeSection() {
     card.appendChild(title);
 
     const text = document.createElement("p");
-    text.textContent = "Add a script to start practicing your lines with Reveal, First Letter, and Type.";
+    text.textContent =
+        "Add a script in Settings to start practicing. New here? See Help in the sidebar footer for a quick walkthrough.";
     card.appendChild(text);
 
     const actions = document.createElement("div");
@@ -208,6 +77,12 @@ function createWelcomeSection() {
     scriptsLink.className = "button-primary";
     scriptsLink.textContent = "Open Settings";
     actions.appendChild(scriptsLink);
+
+    const helpLink = document.createElement("a");
+    helpLink.href = "/app/help/";
+    helpLink.className = "button-secondary";
+    helpLink.textContent = "Help";
+    actions.appendChild(helpLink);
 
     card.appendChild(actions);
     section.appendChild(card);
@@ -368,6 +243,7 @@ function createQuickLinksSection() {
     const links = [
         { href: "/app/overview/", label: "Overview", icon: "book", description: "Characters, scenes, and script structure." },
         { href: "/app/progress/", label: "Progress", icon: "trending_up", description: "Mastery breakdown by character and scene." },
+        { href: "/app/help/", label: "Help", icon: "help_outline", description: "Getting started and how the practice tools work." },
         { href: "/app/settings/", label: "Settings", icon: "settings", description: "Choose your script and practice characters." },
     ];
 

@@ -75,10 +75,6 @@ function createPracticeApi(toolId) {
             );
 
             if (result.ok) {
-                if (typeof markOnboardingToolUsed === "function") {
-                    markOnboardingToolUsed(toolId);
-                }
-
                 updateInterface();
             }
 

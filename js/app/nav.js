@@ -109,6 +109,9 @@ const sidebarHTML = `
                 <a href="/app/settings/" class="sidebar-footer-action" title="Settings">
                     <span class="material-icons" aria-hidden="true">settings</span>
                 </a>
+                <a href="/app/help/" class="sidebar-footer-action" title="Help">
+                    <span class="material-icons" aria-hidden="true">help_outline</span>
+                </a>
             </nav>
         </div>
     </nav>
@@ -178,7 +181,10 @@ function setActiveNavLink() {
 }
 
 setActiveNavLink();
-updateInterface();
+
+if (typeof updateInterface === "function") {
+    updateInterface();
+}
 
 const toggleButton = document.querySelector(".sidebar-toggle");
 const toggleIcon = toggleButton.querySelector(".material-icons");

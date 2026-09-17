@@ -9,10 +9,6 @@ function renderProgress() {
         return;
     }
 
-    if (typeof markOnboardingProgressVisited === "function") {
-        markOnboardingProgressVisited();
-    }
-
     progressRoot.replaceChildren();
 
     const script = getActiveScript();
