@@ -243,10 +243,10 @@ function createPracticeCallToAction() {
     card.className = "card progress-cta-card";
 
     const text = document.createElement("p");
-    text.textContent = "Start with Read, move to Recite, then use Recall to type each line from memory.";
+    text.textContent = "Start with Reveal, move to First Letter, then use Type to enter each line from memory.";
     card.appendChild(text);
 
-    card.appendChild(createPracticeToolActions({ primaryToolId: "read", primaryLabelPrefix: "Start" }));
+    card.appendChild(createPracticeToolActions({ primaryToolId: "reveal", primaryLabelPrefix: "Start" }));
     section.appendChild(card);
     return section;
 }

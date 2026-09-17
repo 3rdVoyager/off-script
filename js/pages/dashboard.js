@@ -131,7 +131,7 @@ function createGettingStartedExpandedSection(status) {
     if (status.allComplete) {
         const text = document.createElement("p");
         text.className = "getting-started-complete-text";
-        text.textContent = "You have the basics down. Keep practicing with Read, Recite, and Recall.";
+        text.textContent = "You have the basics down. Keep practicing with Reveal, First Letter, and Type.";
         section.appendChild(text);
         return section;
     }
@@ -197,7 +197,7 @@ function createWelcomeSection() {
     card.appendChild(title);
 
     const text = document.createElement("p");
-    text.textContent = "Add a script to start practicing your lines with Read, Recite, and Recall.";
+    text.textContent = "Add a script to start practicing your lines with Reveal, First Letter, and Type.";
     card.appendChild(text);
 
     const actions = document.createElement("div");
@@ -243,7 +243,7 @@ function createDashboardHero(script, summary, hasPracticeSetup) {
     } else if (summary.totalLines === 0) {
         subtitle.textContent = "No practice lines match your current settings.";
     } else if (summary.percent === 0) {
-        subtitle.textContent = "Ready to practice. Start with Read, then move to Recite and Recall.";
+        subtitle.textContent = "Ready to practice. Start with Reveal, then move to First Letter and Type.";
     } else {
         subtitle.textContent = `${summary.masteredCount} of ${summary.totalLines} practice lines mastered.`;
     }
@@ -315,7 +315,7 @@ function createPracticeToolsSection() {
 
     const intro = document.createElement("p");
     intro.className = "dashboard-section-intro";
-    intro.textContent = "Work through Read, Recite, and Recall to build line mastery.";
+    intro.textContent = "Work through Reveal, First Letter, and Type to build line mastery.";
     section.appendChild(intro);
 
     const grid = document.createElement("div");

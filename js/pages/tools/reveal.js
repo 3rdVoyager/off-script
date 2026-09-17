@@ -1,7 +1,7 @@
-const readApi = createPracticeApi("read");
+const revealApi = createPracticeApi("reveal");
 
-function mountReadTool(root) {
-    const session = createPracticeLineSession(root, readApi, {
+function mountRevealTool(root) {
+    const session = createPracticeLineSession(root, revealApi, {
         createState: () => ({
             queue: [],
             index: 0,
@@ -30,7 +30,7 @@ function mountReadTool(root) {
             if (event.key === " " || event.key === "Enter") {
                 if (!session.state.revealed) {
                     event.preventDefault();
-                    revealCurrentLine(session.state, session.renderStep, readApi);
+                    revealCurrentLine(session.state, session.renderStep, revealApi);
                 }
             }
         },
@@ -81,3 +81,5 @@ function revealCurrentLine(state, renderStep, api) {
     api.recordSuccess(state, item);
     renderStep();
 }
+
+registerPracticeToolMount("reveal", mountRevealTool);

@@ -1,7 +1,7 @@
 function createPracticeApi(toolId) {
     const meta = getPracticeToolMeta(toolId);
 
-    if (!meta || !PRACTICE_TOOLS[toolId]) {
+    if (!meta) {
         throw new Error(`Unknown practice tool: ${toolId}`);
     }
 
@@ -99,10 +99,6 @@ function createPracticeApi(toolId) {
 
         createShell({ onPrev, onNext }) {
             return createPracticeToolShell({ onPrev, onNext });
-        },
-
-        linesMatch(typedText, expectedText) {
-            return linesMatch(typedText, expectedText);
         },
     };
 }

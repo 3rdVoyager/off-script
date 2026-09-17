@@ -1,10 +1,4 @@
-const DEFAULT_PRACTICE_TOOL = "read";
-
-const PRACTICE_TOOL_MOUNTS = {
-    read: mountReadTool,
-    recite: mountReciteTool,
-    recall: mountRecallTool,
-};
+const DEFAULT_PRACTICE_TOOL = "reveal";
 
 function getToolIdFromUrl() {
     const toolId = new URLSearchParams(window.location.search).get("tool");
@@ -23,8 +17,8 @@ function mountPracticeTool() {
         return;
     }
 
-    let toolId = getToolIdFromUrl();
-    let meta = getPracticeToolMeta(toolId);
+    const toolId = getToolIdFromUrl();
+    const meta = getPracticeToolMeta(toolId);
 
     if (!meta) {
         const url = new URL(window.location.href);
@@ -46,7 +40,7 @@ function mountPracticeTool() {
 
     document.title = `OffScript! | ${meta.label}`;
 
-    const mount = PRACTICE_TOOL_MOUNTS[toolId];
+    const mount = getPracticeToolMount(toolId);
 
     if (mount) {
         mount(root);

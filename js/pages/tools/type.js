@@ -1,9 +1,9 @@
-const recallApi = createPracticeApi("recall");
+const typeApi = createPracticeApi("type");
 
-function mountRecallTool(root) {
+function mountTypeTool(root) {
     let lineInput = null;
 
-    const session = createPracticeLineSession(root, recallApi, {
+    const session = createPracticeLineSession(root, typeApi, {
         createState: () => ({
             queue: [],
             index: 0,
@@ -284,3 +284,5 @@ function createRecallFullLineInput(targetLine, options = {}) {
         isComplete: () => isComplete,
     };
 }
+
+registerPracticeToolMount("type", mountTypeTool);

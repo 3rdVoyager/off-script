@@ -322,7 +322,7 @@ function createSettingsRow({ label, hint, control, controlVariant }) {
     return row;
 }
 
-function createPracticeToolActions({ primaryToolId = "read", primaryLabelPrefix = "Start" } = {}) {
+function createPracticeToolActions({ primaryToolId = "reveal", primaryLabelPrefix = "Start" } = {}) {
     const actions = document.createElement("div");
     actions.className = "page-actions";
 

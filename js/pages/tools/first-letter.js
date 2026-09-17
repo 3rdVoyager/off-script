@@ -1,9 +1,9 @@
-const reciteApi = createPracticeApi("recite");
+const firstLetterApi = createPracticeApi("first-letter");
 
-function mountReciteTool(root) {
+function mountFirstLetterTool(root) {
     let lineInput = null;
 
-    const session = createPracticeLineSession(root, reciteApi, {
+    const session = createPracticeLineSession(root, firstLetterApi, {
         createState: () => ({
             queue: [],
             index: 0,
@@ -197,3 +197,5 @@ function createReciteFirstLetterInput(targetLine, options = {}) {
         isComplete: () => isComplete,
     };
 }
+
+registerPracticeToolMount("first-letter", mountFirstLetterTool);

@@ -4,9 +4,9 @@ function getDefaultOnboardingData() {
     return {
         collapsed: false,
         toolsUsed: {
-            read: false,
-            recite: false,
-            recall: false,
+            reveal: false,
+            "first-letter": false,
+            type: false,
         },
         visitedProgress: false,
     };
@@ -19,12 +19,14 @@ function getOnboardingData() {
         return getDefaultOnboardingData();
     }
 
+    const toolsUsed = data.toolsUsed ?? {};
+
     return {
-        collapsed: data.collapsed !== undefined ? Boolean(data.collapsed) : Boolean(data.dismissed),
+        collapsed: Boolean(data.collapsed),
         toolsUsed: {
-            read: Boolean(data.toolsUsed?.read),
-            recite: Boolean(data.toolsUsed?.recite),
-            recall: Boolean(data.toolsUsed?.recall),
+            reveal: Boolean(toolsUsed.reveal),
+            "first-letter": Boolean(toolsUsed["first-letter"]),
+            type: Boolean(toolsUsed.type),
         },
         visitedProgress: Boolean(data.visitedProgress),
     };
@@ -100,8 +102,8 @@ function syncOnboardingFromAppState() {
         settings.practiceScenes
     );
 
-    if (summary.practicedCount > 0 && !data.toolsUsed.read) {
-        data.toolsUsed.read = true;
+    if (summary.practicedCount > 0 && !data.toolsUsed.reveal) {
+        data.toolsUsed.reveal = true;
         saveOnboardingData(data);
     }
 }
@@ -120,16 +122,16 @@ const GETTING_STARTED_STEPS = [
         href: "/app/settings/",
     },
     {
-        id: "read",
-        label: "Try Read",
+        id: "reveal",
+        label: "Try Reveal",
         description: "Read the cue, remember your line, then reveal it.",
-        href: "/app/practice/?tool=read",
+        href: "/app/practice/?tool=reveal",
     },
     {
-        id: "recite-or-recall",
-        label: "Try Recite or Recall",
-        description: "Type your lines with help (Recite) or from memory (Recall).",
-        href: "/app/practice/?tool=recite",
+        id: "first-letter-or-type",
+        label: "Try First Letter or Type",
+        description: "Type your lines with help (First Letter) or from memory (Type).",
+        href: "/app/practice/?tool=first-letter",
     },
     {
         id: "progress",
@@ -152,12 +154,12 @@ function isGettingStartedStepComplete(stepId) {
         return hasPracticeSettings(script);
     }
 
-    if (stepId === "read") {
-        return data.toolsUsed.read;
+    if (stepId === "reveal") {
+        return data.toolsUsed.reveal;
     }
 
-    if (stepId === "recite-or-recall") {
-        return data.toolsUsed.recite || data.toolsUsed.recall;
+    if (stepId === "first-letter-or-type") {
+        return data.toolsUsed["first-letter"] || data.toolsUsed.type;
     }
 
     if (stepId === "progress") {

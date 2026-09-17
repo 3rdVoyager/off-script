@@ -135,7 +135,9 @@ function getPracticeToolFromPath(pathname, search) {
         return null;
     }
 
-    return new URLSearchParams(search).get("tool") || "read";
+    const toolId = new URLSearchParams(search).get("tool");
+
+    return toolId || "reveal";
 }
 
 function getPracticeToolFromHref(href) {
