@@ -101,11 +101,5 @@ function applyPracticeScore(lineMastery, toolName) {
         return lineMastery;
     }
 
-    const nextScore = lineMastery + weight * (maxContribution - lineMastery);
-
-    if (typeof DEV_CONFIG !== "undefined" && DEV_CONFIG.logScoring) {
-        console.log(`[scoring] ${toolName}: ${lineMastery.toFixed(3)} → ${nextScore.toFixed(3)}`);
-    }
-
-    return nextScore;
+    return lineMastery + weight * (maxContribution - lineMastery);
 }

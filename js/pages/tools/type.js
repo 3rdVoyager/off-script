@@ -168,6 +168,9 @@ function getRecallCharacterSimilarity(typedText, expectedText) {
     return 1 - recallLevenshteinDistance(typed, expected) / maxLength;
 }
 
+// Fraction of expected words that must match (in order); character similarity uses threshold + 0.05 (capped).
+const TYPE_LINE_MATCH_THRESHOLD = 0.9;
+
 function recallLinesMatch(typedText, expectedText) {
     const typed = normalizeRecallLine(typedText);
     const expected = normalizeRecallLine(expectedText);
@@ -176,7 +179,7 @@ function recallLinesMatch(typedText, expectedText) {
         return true;
     }
 
-    const threshold = typeof LINE_MATCH_THRESHOLD === "number" ? LINE_MATCH_THRESHOLD : 0.9;
+    const threshold = TYPE_LINE_MATCH_THRESHOLD;
     const wordScore = getRecallWordMatchScore(typedText, expectedText);
 
     if (wordScore >= threshold) {
