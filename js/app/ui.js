@@ -104,7 +104,7 @@ function updateInterface() {
     }
 
     // Practice tools keep their own session state; only refresh passive pages here.
-    // Use typeof checks so pages without overview.js / settings.js don't throw on load.
+    // Use typeof checks so pages without overview/settings page scripts don't throw on load.
     if (document.querySelector("[data-overview-root]") && typeof renderOverview === "function") {
         renderOverview();
     }

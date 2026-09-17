@@ -14,7 +14,7 @@ function mountReciteTool(root) {
         onResetStep: (state) => {
             state.completed = false;
         },
-        renderStep: ({ shell, state, api }) => {
+        renderStep: ({ shell, state, api, moveIndex }) => {
             const item = api.getCurrentItem(state);
 
             if (!item) {
@@ -27,12 +27,12 @@ function mountReciteTool(root) {
             shell.meta.textContent = api.formatMeta(item, state.index, state.queue.length);
             api.renderCue(shell.cueSection, item.cue);
             shell.contentSection.replaceChildren();
-            renderInputSection(shell.contentSection, item.line, state, api, session);
+            renderInputSection(shell.contentSection, item.line, state, api, moveIndex);
             shell.updateNav(state.index, state.queue.length);
         },
     });
 
-    function renderInputSection(contentSection, line, state, api, sessionRef) {
+    function renderInputSection(contentSection, line, state, api, moveIndex) {
         const label = document.createElement("p");
         label.className = "practice-section-label";
         label.textContent = "Type your line";
@@ -58,7 +58,7 @@ function mountReciteTool(root) {
                 state.completed = true;
                 api.recordSuccess(state, item);
             },
-            onEnterWhenComplete: () => sessionRef.moveIndex(1),
+            onEnterWhenComplete: () => moveIndex(1),
         });
 
         contentSection.appendChild(lineInput.element);

@@ -171,7 +171,7 @@ function createPracticeLineSession(root, api, { createState, onResetStep, render
             return;
         }
 
-        renderStep({ shell, state, api });
+        renderStep({ shell, state, api, moveIndex });
     }
 
     bindPracticeArrowKeys(state, moveIndex, onKeydownExtra);
